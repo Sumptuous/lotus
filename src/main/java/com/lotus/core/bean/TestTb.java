@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 测试JavaBean
- * @author lx
+ * @author wyy
  *
  */
 public class TestTb {

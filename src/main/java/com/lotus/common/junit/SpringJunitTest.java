@@ -6,7 +6,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 测试共公类
- * @author lx
+ * @author wyy
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)

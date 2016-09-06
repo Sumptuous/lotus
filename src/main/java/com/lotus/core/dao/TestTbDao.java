@@ -5,7 +5,7 @@ import com.lotus.core.bean.TestTb;
 
 /**
  * 测试
- * @author lx
+ * @author wyy
  *
  */
 public interface TestTbDao {

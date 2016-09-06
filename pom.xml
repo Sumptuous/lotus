@@ -279,11 +279,5 @@
       <artifactId>jcaptcha-my</artifactId>
       <version>1.0</version>
     </dependency>
-    <!--page -->
-    <dependency>
-      <groupId>cn.itcast</groupId>
-      <artifactId>page</artifactId>
-      <version>1.0</version>
-    </dependency>
   </dependencies>
 </project>
