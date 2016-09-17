@@ -14,11 +14,23 @@
 	<context:component-scan base-package="com.lotus" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-	
+
+	<!-- 配置全局日期转换 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.lotus.core.web.CustomDateConvertor"/>
+		</property>
+	</bean>
+
 	<!-- jsp视图 -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/back_page/"/>
 		<property name="suffix" value=".jsp"/>
+	</bean>
+
+	<!-- 上传图片 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="6291456"/>
 	</bean>
 	
 </beans>

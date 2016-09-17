@@ -5,16 +5,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>我的购物车</title>
-<link rel="stylesheet" href="/res/css/style.css" />
-<script src="/res/js/jquery.js"></script>
-<script src="/res/js/com.js"></script>
-<script type="text/javascript">
-//结算
-function trueBuy(){
- 	window.location.href = "productOrder.jsp";
-}
-</script>
+	<title>我的购物车</title>
+	<link rel="stylesheet" href="/res/css/style.css" />
+	<script src="/res/js/jquery.js"></script>
+	<script src="/res/js/com.js"></script>
+	<script type="text/javascript">
+		//结算
+		function trueBuy(){
+			window.location.href = "productOrder.jsp";
+		}
+	</script>
 </head>
 <body>
 <div class="bar"><div class="bar_w">
@@ -27,18 +27,18 @@ function trueBuy(){
 		<li class="dev">
 			您好,欢迎来到新巴巴运动网！
 		</li>
-	<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="myOrder()" title="我的订单">我的订单</a></li>
-	<li class="dev"><a href="#" title="在线客服">在线客服</a></li>
-	<li class="dev after"><a href="#" title="English">English</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="myOrder()" title="我的订单">我的订单</a></li>
+		<li class="dev"><a href="#" title="在线客服">在线客服</a></li>
+		<li class="dev after"><a href="#" title="English">English</a></li>
 	</ul>
 </div></div>
 <ul class="ul step st3_1">
-<li title="1.我的购物车" class="here">1.我的购物车</li>
-<li title="2.填写核对订单信息">2.填写核对订单信息</li>
-<li title="3.成功提交订单">3.成功提交订单</li>
+	<li title="1.我的购物车" class="here">1.我的购物车</li>
+	<li title="2.填写核对订单信息">2.填写核对订单信息</li>
+	<li title="3.成功提交订单">3.成功提交订单</li>
 </ul>
 <div class="w ofc case">
 	<div class="confirm">
@@ -51,16 +51,16 @@ function trueBuy(){
 				</b>
 			</div>
 			<table cellspacing="0" class="tab tab4" summary="">
-			<thead>
-			<tr>
-			<th class="wp">商品</th>
-			<th>单价（元）</th>
-			<th>数量</th>
-			<th>操作</th>
-			</tr>     
-			</thead>
-			<tbody>
-			
+				<thead>
+				<tr>
+					<th class="wp">商品</th>
+					<th>单价（元）</th>
+					<th>数量</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+
 				<tr>
 					<td class="nwp pic">
 						<ul class="uls">
@@ -79,7 +79,7 @@ function trueBuy(){
 					<td><a onclick="subProductAmount(492,9)" class="inb arr" title="减" href="javascript:void(0);">-</a><input type="text" id="num492" readonly="readonly" value="1" name="" size="1" class="txts"><a onclick="addProductAmount(492,9)" class="inb arr" title="加" href="javascript:void(0);">+</a></td>
 					<td class="blue"><a onclick="delProduct(492)" title="删除" href="javascript:void(0);">删除</a></td>
 				</tr>
-				
+
 				<tr>
 					<td class="nwp pic">
 						<ul class="uls">
@@ -98,7 +98,7 @@ function trueBuy(){
 					<td><a onclick="subProductAmount(503,4)" class="inb arr" title="减" href="javascript:void(0);">-</a><input type="text" id="num503" readonly="readonly" value="1" name="" size="1" class="txts"><a onclick="addProductAmount(503,4)" class="inb arr" title="加" href="javascript:void(0);">+</a></td>
 					<td class="blue"><a onclick="delProduct(503)" title="删除" href="javascript:void(0);">删除</a></td>
 				</tr>
-				
+
 				<tr>
 					<td class="nwp pic">
 						<ul class="uls">
@@ -117,8 +117,8 @@ function trueBuy(){
 					<td><a onclick="subProductAmount(500,1)" class="inb arr" title="减" href="javascript:void(0);">-</a><input type="text" id="num500" readonly="readonly" value="1" name="" size="1" class="txts"><a onclick="addProductAmount(500,1)" class="inb arr" title="加" href="javascript:void(0);">+</a></td>
 					<td class="blue"><a onclick="delProduct(500)" title="删除" href="javascript:void(0);">删除</a></td>
 				</tr>
-				           
-			</tbody>
+
+				</tbody>
 			</table>
 			<div class="page">
 				<span class="l">
@@ -142,7 +142,7 @@ function trueBuy(){
 	<div class="confirm">
 		<div class="tl"></div><div class="tr"></div>
 		<div class="ofc pb40" style="text-align: center;height: 200px;margin-top: 80px">
-       		 <a href="http://localhost:8080" style="color: red;font-size: 30px;">去首页</a>挑选喜欢的商品
+			<a href="http://localhost:8080" style="color: red;font-size: 30px;">去首页</a>挑选喜欢的商品
 		</div>
 	</div>
 </div>
@@ -152,51 +152,51 @@ function trueBuy(){
 		<li class="first">
 			<span class="guide"></span>
 			<dl>
-			<dt title="购物指南">购物指南</dt>
-			<dd><a href="#" title="购物流程">购物流程</a></dd>
-			<dd><a href="#" title="购物流程">购物流程</a></dd>
-			<dd><a href="#" target="_blank" title="联系客服">联系客服</a></dd>
-			<dd><a href="#" target="_blank" title="联系客服">联系客服</a></dd>
+				<dt title="购物指南">购物指南</dt>
+				<dd><a href="#" title="购物流程">购物流程</a></dd>
+				<dd><a href="#" title="购物流程">购物流程</a></dd>
+				<dd><a href="#" target="_blank" title="联系客服">联系客服</a></dd>
+				<dd><a href="#" target="_blank" title="联系客服">联系客服</a></dd>
 			</dl>
 		</li>
 		<li>
 			<span class="way"></span>
 			<dl>
-			<dt title="支付方式">支付方式</dt>
-			<dd><a href="#" title="货到付款">货到付款</a></dd>
-			<dd><a href="#" title="在线支付">在线支付</a></dd>
-			<dd><a href="#" title="分期付款">分期付款</a></dd>
-			<dd><a href="#" title="分期付款">分期付款</a></dd>
+				<dt title="支付方式">支付方式</dt>
+				<dd><a href="#" title="货到付款">货到付款</a></dd>
+				<dd><a href="#" title="在线支付">在线支付</a></dd>
+				<dd><a href="#" title="分期付款">分期付款</a></dd>
+				<dd><a href="#" title="分期付款">分期付款</a></dd>
 			</dl>
 		</li>
 		<li>
 			<span class="help"></span>
 			<dl>
-			<dt title="配送方式">配送方式</dt>
-			<dd><a href="#" title="上门自提">上门自提</a></dd>
-			<dd><a href="#" title="上门自提">上门自提</a></dd>
-			<dd><a href="#" title="上门自提">上门自提</a></dd>
-			<dd><a href="#" title="上门自提">上门自提</a></dd>
+				<dt title="配送方式">配送方式</dt>
+				<dd><a href="#" title="上门自提">上门自提</a></dd>
+				<dd><a href="#" title="上门自提">上门自提</a></dd>
+				<dd><a href="#" title="上门自提">上门自提</a></dd>
+				<dd><a href="#" title="上门自提">上门自提</a></dd>
 			</dl>
 		</li>
 		<li>
 			<span class="service"></span>
 			<dl>
-			<dt title="售后服务">售后服务</dt>
-			<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
-			<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
-			<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
-			<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
+				<dt title="售后服务">售后服务</dt>
+				<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
+				<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
+				<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
+				<dd><a href="#" target="_blank" title="售后策略">售后策略</a></dd>
 			</dl>
 		</li>
 		<li>
 			<span class="problem"></span>
 			<dl>
-			<dt title="特色服务">特色服务</dt>
-			<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
-			<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
-			<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
-			<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
+				<dt title="特色服务">特色服务</dt>
+				<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
+				<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
+				<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
+				<dd><a href="#" target="_blank" title="夺宝岛">夺宝岛</a></dd>
 			</dl>
 		</li>
 	</ul>
