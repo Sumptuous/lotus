@@ -1,5 +1,7 @@
 package com.lotus.core.bean.product;
 
+import com.lotus.core.web.Constants;
+
 public class Brand {
     private Integer id;
 
@@ -14,6 +16,11 @@ public class Brand {
     private Integer sort;
 
     private Integer isDisplay;
+
+    //获取全路径
+    public String getAllUrl(){
+        return Constants.IMAGE_URL + imgUrl;
+    }
 
     public Integer getId() {
         return id;

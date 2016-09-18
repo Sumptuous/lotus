@@ -27,4 +27,29 @@ public interface BrandService {
      * @param brand
      */
     void addBrand(Brand brand);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void deleteBrandByKey(Integer id);
+
+    /**
+     * 删除 批量
+     * @param ids
+     */
+    void deleteBrandByKeys(Integer[] ids);//List<Integer>  ids
+
+    /**
+     * 修改
+     * @param brand
+     */
+    void updateBrandByKey(Brand brand);
+
+    /**
+     * 根据主键获取
+     * @param id
+     * @return
+     */
+    Brand getBrandByKey(Integer id);
 }

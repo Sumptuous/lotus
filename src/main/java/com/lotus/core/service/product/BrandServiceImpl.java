@@ -4,6 +4,7 @@ import com.lotus.common.page.Pagination;
 import com.lotus.common.page.SortLimit;
 import com.lotus.core.bean.product.Brand;
 import com.lotus.core.dao.product.BrandMapper;
+import com.lotus.core.query.product.BrandQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,5 +52,30 @@ public class BrandServiceImpl implements BrandService {
 
     public void addBrand(Brand brand) {
         brandMapper.addBrand(brand);
+    }
+
+    public void deleteBrandByKey(Integer id) {
+        brandMapper.deleteBrandByKey(id);
+
+    }
+
+    public void deleteBrandByKeys(Integer[] ids) {
+        brandMapper.deleteBrandByKeys(ids);
+
+    }
+
+    public void updateBrandByKey(Brand brand) {
+        brandMapper.updateBrandByKey(brand);
+
+    }
+
+    public Brand getBrandByKey(Integer id) {
+        // TODO Auto-generated method stub
+        return brandMapper.getBrandByKey(id);
+    }
+
+    public List<Brand> getBrandList(BrandQuery brandQuery) {
+        // TODO Auto-generated method stub
+        return brandMapper.getBrandList(brandQuery);
     }
 }

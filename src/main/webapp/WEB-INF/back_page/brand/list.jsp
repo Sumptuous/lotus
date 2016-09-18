@@ -5,6 +5,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>lotus-list</title>
+
+	<script type="text/javascript">
+		//全选
+		function checkBox(name, checked) {
+			$("input[name='" + name + "']").attr("checked", checked);
+		}
+
+		//删除
+		function optDelete(name, isDisplay) {
+			var s = $("input[name='ids']:checked").size();
+
+			if (!s > 0){
+				alert("请至少选择一个! ");
+				return ;
+			}
+			if (!confirm("你确定删除吗?")){
+				return ;
+			}
+			$("#jvForm").attr("action", "/brand/deletes.do?name=" + name +"&amp;isDisplay=" + isDisplay);
+			$("#jvForm").attr("method", "post").submit();
+		}
+	</script>
 </head>
 <body>
 <div class="box-positon">
@@ -24,6 +46,7 @@
 	</select>
 	<input type="submit" class="query" value="查询"/>
 </form>
+<form id="jvForm">
 <table cellspacing="1" cellpadding="0" border="0" width="100%" class="pn-ltable">
 	<thead class="pn-lthead">
 		<tr>
@@ -39,23 +62,24 @@
 	</thead>
 	<tbody class="pn-ltbody">
 		<c:forEach items="${pagination.list }" var="entry">
-		
+
 			<tr bgcolor="#ffffff" onmouseout="this.bgColor='#ffffff'" onmouseover="this.bgColor='#eeeeee'">
 				<td><input type="checkbox" value="${entry.id }" name="ids"/></td>
 				<td align="center">${entry.id }</td>
 				<td align="center">${entry.name }</td>
-				<td align="center"></td>
+				<td align="center"><img width="40" height="40" src="${entry.allUrl}"/></td>
 				<td align="center">${entry.description }</td>
 				<td align="center">${entry.sort }</td>
 				<td align="center"><c:if test="${entry.isDisplay == 1 }">是</c:if><c:if test="${entry.isDisplay == 0 }">不是</c:if></td>
 				<td align="center">
-				<a class="pn-opt" href="#">修改</a> | <a class="pn-opt"  href="/brand/delete.do?id=${entry.id }&name=${name}&isDisplay=${isDisplay}">删除</a>
+				<a class="pn-opt" href="javascript:void(0)" onclick=" window.location.href='/brand/toEdit.do?id=${entry.id}'">修改</a> | <a class="pn-opt" onclick="if (!confirm('您确定删除吗？')){return false;} window.location.href='/brand/delete.do?id=${entry.id}'" href="javascript:void(0)">删除</a>
 				</td>
 			</tr>
 		</c:forEach>
-	
+
 	</tbody>
 </table>
+</form>
 <div class="page pb15">
 	<span class="r inb_a page_b">
 		<c:forEach items="${pagination.pageView }" var="page">
@@ -63,7 +87,7 @@
 		</c:forEach>
 	</span>
 </div>
-<div style="margin-top:15px;"><input class="del-button" type="button" value="删除" onclick="optDelete();"/></div>
+<div style="margin-top:15px;"><input class="del-button" type="button" value="删除" onclick="optDelete('${name}', '${isDisplay}');"/></div>
 </div>
 </body>
 </html>
