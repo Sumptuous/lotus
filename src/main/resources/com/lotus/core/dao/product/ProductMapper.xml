@@ -25,26 +25,156 @@
     <result column="description" property="description" jdbcType="LONGVARCHAR" />
     <result column="package_list" property="packageList" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, no, name, weight, is_new, is_hot, is_commend, create_time, create_user_id, check_time, 
-    check_user_id, is_show, is_del, type_id, brand_id, keywords, sales, feature, color, 
-    size
-  </sql>
-  <sql id="Blob_Column_List" >
-    description, package_list
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+
+  <!-- Select SQL -->
+  <sql id="productSelector">
+    select
+        <if test="fields != null">
+          ${fields}
+        </if>
+        <if test="fields == null">
+          id, no, name, weight, is_new, is_hot, is_commend, create_time, create_user_id, check_time,
+          check_user_id, is_show, is_del, type_id, brand_id, keywords, sales, feature, color,
+          size, description, package_list
+        </if>
     from lotus_product
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from lotus_product
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </sql>
+  <sql id="productListWhere">
+    <where>
+      <if test="id != null">
+        and id=#{id}
+      </if>
+      <if test="no != null">
+        <if test="noLike == false">
+          and no=#{no}
+        </if>
+        <if test="noLike == true">
+          and  no like "%"#{no}"%"
+        </if>
+      </if>
+      <if test="name != null">
+        <if test="nameLike == false">
+          and name=#{name}
+        </if>
+        <if test="nameLike == true">
+          and  name like "%"#{name}"%"
+        </if>
+      </if>
+      <if test="weight != null">
+        and weight=#{weight}
+      </if>
+      <if test="isNew != null">
+        and is_new=#{isNew}
+      </if>
+      <if test="isHot != null">
+        and is_hot=#{isHot}
+      </if>
+      <if test="isCommend != null">
+        and is_commend=#{isCommend}
+      </if>
+      <if test="createTime != null">
+        and create_time=#{createTime}
+      </if>
+      <if test="createUserId != null">
+        <if test="createUserIdLike == false">
+          and create_user_id=#{createUserId}
+        </if>
+        <if test="createUserIdLike == true">
+          and  create_user_id like "%"#{createUserId}"%"
+        </if>
+      </if>
+      <if test="checkTime != null">
+        and check_time=#{checkTime}
+      </if>
+      <if test="checkUserId != null">
+        <if test="checkUserIdLike == false">
+          and check_user_id=#{checkUserId}
+        </if>
+        <if test="checkUserIdLike == true">
+          and  check_user_id like "%"#{checkUserId}"%"
+        </if>
+      </if>
+      <if test="isShow != null">
+        and is_show=#{isShow}
+      </if>
+      <if test="isDel != null">
+        and is_del=#{isDel}
+      </if>
+      <if test="typeId != null">
+        and type_id=#{typeId}
+      </if>
+      <if test="brandId != null">
+        and brand_id=#{brandId}
+      </if>
+      <if test="keywords != null">
+        <if test="keywordsLike == false">
+          and keywords=#{keywords}
+        </if>
+        <if test="keywordsLike == true">
+          and  keywords like "%"#{keywords}"%"
+        </if>
+      </if>
+      <if test="sales != null">
+        and sales=#{sales}
+      </if>
+      <if test="description != null">
+        <if test="descriptionLike == false">
+          and description=#{description}
+        </if>
+        <if test="descriptionLike == true">
+          and  description like "%"#{description}"%"
+        </if>
+      </if>
+      <if test="packageList != null">
+        <if test="packageListLike == false">
+          and package_list=#{packageList}
+        </if>
+        <if test="packageListLike == true">
+          and  package_list like "%"#{packageList}"%"
+        </if>
+      </if>
+      <if test="feature != null">
+        <if test="featureLike == false">
+          and feature=#{feature}
+        </if>
+        <if test="featureLike == true">
+          and  feature like "%"#{feature}"%"
+        </if>
+      </if>
+      <if test="color != null">
+        <if test="colorLike == false">
+          and color=#{color}
+        </if>
+        <if test="colorLike == true">
+          and  color like "%"#{color}"%"
+        </if>
+      </if>
+      <if test="size != null">
+        <if test="sizeLike == false">
+          and size=#{size}
+        </if>
+        <if test="sizeLike == true">
+          and  size like "%"#{size}"%"
+        </if>
+      </if>
+    </where>
+  </sql>
+
+  <sql id="productListOrder">
+    <if test="orderFields != null and orderFields.size > 0">
+      order by
+          <foreach collection="orderFields" separator="," item="orderFields">
+            ${orderField.fieldName} ${orderField.order}
+          </foreach>
+    </if>
+  </sql>
+
+  <sql id="productListLimit">
+    <if test="startRow != null">
+      limit #{startRow},#{pageSize}
+    </if>
+  </sql>
+
   <insert id="insert" parameterType="com.lotus.core.bean.product.Product" >
     insert into lotus_product (id, no, name, 
       weight, is_new, is_hot, is_commend, 
@@ -63,145 +193,7 @@
       #{size,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{packageList,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.lotus.core.bean.product.Product" >
-    insert into lotus_product
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="no != null" >
-        no,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="weight != null" >
-        weight,
-      </if>
-      <if test="isNew != null" >
-        is_new,
-      </if>
-      <if test="isHot != null" >
-        is_hot,
-      </if>
-      <if test="isCommend != null" >
-        is_commend,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="createUserId != null" >
-        create_user_id,
-      </if>
-      <if test="checkTime != null" >
-        check_time,
-      </if>
-      <if test="checkUserId != null" >
-        check_user_id,
-      </if>
-      <if test="isShow != null" >
-        is_show,
-      </if>
-      <if test="isDel != null" >
-        is_del,
-      </if>
-      <if test="typeId != null" >
-        type_id,
-      </if>
-      <if test="brandId != null" >
-        brand_id,
-      </if>
-      <if test="keywords != null" >
-        keywords,
-      </if>
-      <if test="sales != null" >
-        sales,
-      </if>
-      <if test="feature != null" >
-        feature,
-      </if>
-      <if test="color != null" >
-        color,
-      </if>
-      <if test="size != null" >
-        size,
-      </if>
-      <if test="description != null" >
-        description,
-      </if>
-      <if test="packageList != null" >
-        package_list,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="no != null" >
-        #{no,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="weight != null" >
-        #{weight,jdbcType=DOUBLE},
-      </if>
-      <if test="isNew != null" >
-        #{isNew,jdbcType=BIT},
-      </if>
-      <if test="isHot != null" >
-        #{isHot,jdbcType=BIT},
-      </if>
-      <if test="isCommend != null" >
-        #{isCommend,jdbcType=BIT},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserId != null" >
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="checkTime != null" >
-        #{checkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="checkUserId != null" >
-        #{checkUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="isShow != null" >
-        #{isShow,jdbcType=BIT},
-      </if>
-      <if test="isDel != null" >
-        #{isDel,jdbcType=BIT},
-      </if>
-      <if test="typeId != null" >
-        #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="brandId != null" >
-        #{brandId,jdbcType=INTEGER},
-      </if>
-      <if test="keywords != null" >
-        #{keywords,jdbcType=VARCHAR},
-      </if>
-      <if test="sales != null" >
-        #{sales,jdbcType=INTEGER},
-      </if>
-      <if test="feature != null" >
-        #{feature,jdbcType=VARCHAR},
-      </if>
-      <if test="color != null" >
-        #{color,jdbcType=VARCHAR},
-      </if>
-      <if test="size != null" >
-        #{size,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null" >
-        #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="packageList != null" >
-        #{packageList,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.lotus.core.bean.product.Product" >
     update lotus_product
     <set >
@@ -296,4 +288,17 @@
       package_list = #{packageList,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 分页 -->
+  <select id="getProductListWithPage" parameterType="ProductQuery" resultMap="BaseResultMap">
+    <include refid="productSelector" />
+    <include refid="productListWhere" />
+    <include refid="productListOrder" />
+    <include refid="productListLimit" />
+  </select>
+  <!-- 数据总数 -->
+  <select id="getProductListCount" parameterType="ProductQuery" resultType="int">
+    SELECT count(1) FROM lotus_product
+    <include refid="productListWhere" />
+  </select>
 </mapper>

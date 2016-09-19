@@ -1,6 +1,7 @@
 package com.lotus.core.query.product;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,11 @@ public class BrandQuery {
 	private String imgUrl;
 	private Integer sort;
 	private Integer isDisplay;
+
+	private Date createTime;
+
+	private Date modifyTime;
+
 	public Integer getId() {
 		return id;
 	}
@@ -86,7 +92,23 @@ public class BrandQuery {
 	public void setNameLike(boolean nameLike) {
 		this.nameLike = nameLike;
 	}
-	
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
 	/***********order by *************************************/
 	public class FieldOrder{
 		private String field;  //id , name  imgUrl
@@ -122,16 +144,16 @@ public class BrandQuery {
 	public void orderbyId(boolean isAsc){
 		fieldOrders.add(new FieldOrder("id",isAsc == true ? "asc" : "desc"));
 	}
-	
-	
+
+
 	//页号
 	private Integer pageNo = 1;//int
 	//开始行
 	private Integer startRow;//null
 	//每页数
 	private Integer pageSize = 10;
-	
-	
+
+
 	public Integer getStartRow() {
 		return startRow;
 	}
@@ -159,6 +181,6 @@ public class BrandQuery {
 		this.startRow = (pageNo - 1)*pageSize;
 		this.pageNo = pageNo;
 	}
-	
-	
+
+
 }

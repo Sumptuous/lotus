@@ -12,6 +12,8 @@
     <result column="img_url" property="imgUrl"/>
     <result column="sort" property="sort"/>
     <result column="is_display" property="isDisplay"/>
+    <result column="create_time" property="createTime"/>
+    <result column="modify_time" property="modifyTime"/>
   </resultMap>
 
   <!-- brandSelector   fields  id,name   id   #{id} == "id"  ${id} == id     -->
@@ -23,7 +25,7 @@
     <if test="fields == null">
       id , name ,description,img_url,sort,is_display
     </if>
-    from bbs_brand
+    from lotus_brand
   </sql>
   <!-- 品牌条件 -->
   <sql id="brandWhere">
@@ -68,23 +70,23 @@
   </select>
 
   <!-- 查询品牌   get*   -->
-  <select id="getBrandListWithPage" resultMap="brand">
-    select id , name ,description,img_url,sort,is_display
+  <select id="getBrandListWithPage" parameterType="BrandQuery" resultMap="brand">
+    select id , name ,description,img_url,sort,is_display, create_time, modify_time
     from lotus_brand
     <where>
-      <if test="brand.isDisplay != null">
-        is_display = #{brand.isDisplay}
+      <if test="isDisplay != null">
+        is_display = #{isDisplay}
       </if>
-      <if test="brand.name != null">
-        and name = #{brand.name}
+      <if test="name != null">
+        and name = #{name}
       </if>
     </where>
-    order by id desc
-    limit #{sl.offset},#{sl.max}
+    order by modify_time desc
+    limit #{startRow},#{pageSize}
   </select>
 
   <!-- 查询总记录数 -->
-  <select id="getBrandCount" parameterType="Brand" resultType="Integer">
+  <select id="getBrandCount" parameterType="BrandQuery" resultType="Integer">
     select count(1)
     from lotus_brand
     <where>
@@ -104,7 +106,9 @@
       description,
       img_url,
       sort,
-      is_display
+      is_display,
+      create_time,
+      modify_time
     </trim>
     values
     <trim prefix="(" suffix=")">
@@ -112,7 +116,9 @@
       #{description},
       #{imgUrl},
       #{sort},
-      #{isDisplay}
+      #{isDisplay},
+      #{createTime},
+      #{modifyTime}
     </trim>
   </insert>
 
@@ -152,7 +158,10 @@
         sort=#{sort},
       </if>
       <if test="isDisplay != null">
-        is_display=#{isDisplay}
+        is_display=#{isDisplay},
+      </if>
+      <if test="modifyTime != null">
+        modify_time=#{modifyTime}
       </if>
     </set>
     <where>

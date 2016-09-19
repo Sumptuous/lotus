@@ -3,48 +3,70 @@ package com.lotus.core.bean.product;
 import java.util.Date;
 
 public class Product {
+    /**主键id*/
     private Integer id;
 
+    /**商品编号*/
     private String no;
 
+    /**商品名称*/
     private String name;
 
+    /**重量 单位:克*/
     private Double weight;
 
-    private Boolean isNew;
+    /**是否新品:0:旧品,1:新品*/
+    private Integer isNew = 0;
 
-    private Boolean isHot;
+    /**是否热销:0,否 1:是*/
+    private Integer isHot = 0;
 
-    private Boolean isCommend;
+    /**推荐 1推荐 0 不推荐*/
+    private Integer isCommend = 0;
 
+    /**添加时间*/
     private Date createTime;
 
+    /**添加人ID*/
     private String createUserId;
 
+    /**审核时间*/
     private Date checkTime;
 
+    /**审核人ID*/
     private String checkUserId;
 
-    private Boolean isShow;
+    /**上下架:0否 1是*/
+    private Integer isShow = 0;
 
-    private Boolean isDel;
+    /**是否删除:0删除,1,没删除*/
+    private Integer isDel = 1;
 
+    /**类型ID*/
     private Integer typeId;
 
+    /**品牌ID*/
     private Integer brandId;
 
+    /**检索关键词*/
     private String keywords;
 
+    /**销量*/
     private Integer sales;
 
+    /**颜色集*/
     private String feature;
 
+    /**尺寸集*/
     private String color;
 
+    /**商品属性集*/
     private String size;
 
+    /**商品描述*/
     private String description;
 
+    /**包装清单*/
     private String packageList;
 
     public String getDescription() {
@@ -95,27 +117,27 @@ public class Product {
         this.weight = weight;
     }
 
-    public Boolean getIsNew() {
+    public Integer getIsNew() {
         return isNew;
     }
 
-    public void setIsNew(Boolean isNew) {
+    public void setIsNew(Integer isNew) {
         this.isNew = isNew;
     }
 
-    public Boolean getIsHot() {
+    public Integer getIsHot() {
         return isHot;
     }
 
-    public void setIsHot(Boolean isHot) {
+    public void setIsHot(Integer isHot) {
         this.isHot = isHot;
     }
 
-    public Boolean getIsCommend() {
+    public Integer getIsCommend() {
         return isCommend;
     }
 
-    public void setIsCommend(Boolean isCommend) {
+    public void setIsCommend(Integer isCommend) {
         this.isCommend = isCommend;
     }
 
@@ -151,19 +173,19 @@ public class Product {
         this.checkUserId = checkUserId == null ? null : checkUserId.trim();
     }
 
-    public Boolean getIsShow() {
+    public Integer getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Integer isShow) {
         this.isShow = isShow;
     }
 
-    public Boolean getIsDel() {
+    public Integer getIsDel() {
         return isDel;
     }
 
-    public void setIsDel(Boolean isDel) {
+    public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
 

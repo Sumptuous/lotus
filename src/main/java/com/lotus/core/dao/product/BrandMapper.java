@@ -16,17 +16,16 @@ public interface BrandMapper {
     /**
      * 品牌列表
      * @param brand
-     * @param sortLimit
      * @return
      */
-    List<Brand> getBrandListWithPage(@Param("brand") Brand brand, @Param("sl") SortLimit sortLimit);
+    List<Brand> getBrandListWithPage(BrandQuery brand);
 
     /**
      * 品牌总记录数
      * @param brand
      * @return
      */
-    int getBrandCount(Brand brand);
+    int getBrandCount(BrandQuery brand);
 
     /**
      * 添加品牌

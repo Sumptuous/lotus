@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,10 +25,10 @@ public class BrandServiceImpl implements BrandService {
     private BrandMapper brandMapper;
 
     @Transactional(readOnly = true)
-    public Pagination getBrandList(String name, Integer isDisplay, SortLimit sortLimit, ModelMap modelMap) {
+    public Pagination getBrandList(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap) {
 
         StringBuilder params = new StringBuilder();
-        Brand brand = new Brand();
+        BrandQuery brand = new BrandQuery();
         if (StringUtils.isNotBlank(name)){
             brand.setName(name);
             params.append("name=").append(name);
@@ -36,10 +37,10 @@ public class BrandServiceImpl implements BrandService {
         params.append("&").append("isDisplay=").append(isDisplay);
 
         //如果页号为null 或小于1  置为1
-        sortLimit.setOffset(Pagination.cpn(sortLimit.getOffset()));
+        brand.setPageNo(Pagination.cpn(pageNo));
         int brandCount = brandMapper.getBrandCount(brand);
-        List<Brand> getBrandList = brandMapper.getBrandListWithPage(brand, sortLimit);
-        Pagination pagination = new Pagination(sortLimit.getOffset(), sortLimit.getMax(), brandCount);
+        List<Brand> getBrandList = brandMapper.getBrandListWithPage(brand);
+        Pagination pagination = new Pagination(brand.getPageNo(), brand.getPageSize(), brandCount);
         pagination.setList(getBrandList);
 
         String url = "/brand/list.do";
@@ -51,6 +52,8 @@ public class BrandServiceImpl implements BrandService {
     }
 
     public void addBrand(Brand brand) {
+        brand.setCreateTime(new Date());
+        brand.setModifyTime(new Date());
         brandMapper.addBrand(brand);
     }
 
@@ -65,6 +68,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     public void updateBrandByKey(Brand brand) {
+        brand.setModifyTime(new Date());
         brandMapper.updateBrandByKey(brand);
 
     }

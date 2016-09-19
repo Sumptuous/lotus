@@ -2,6 +2,8 @@ package com.lotus.core.bean.product;
 
 import com.lotus.core.web.Constants;
 
+import java.util.Date;
+
 public class Brand {
     private Integer id;
 
@@ -16,6 +18,10 @@ public class Brand {
     private Integer sort;
 
     private Integer isDisplay;
+
+    private Date createTime;
+
+    private Date modifyTime;
 
     //获取全路径
     public String getAllUrl(){
@@ -76,5 +82,21 @@ public class Brand {
 
     public void setIsDisplay(Integer isDisplay) {
         this.isDisplay = isDisplay;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

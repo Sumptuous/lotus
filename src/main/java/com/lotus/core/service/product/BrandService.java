@@ -3,6 +3,7 @@ package com.lotus.core.service.product;
 import com.lotus.common.page.Pagination;
 import com.lotus.common.page.SortLimit;
 import com.lotus.core.bean.product.Brand;
+import com.lotus.core.query.product.BrandQuery;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public interface BrandService {
      * 品牌列表
      * @param name
      * @param isDisplay
-     * @param sortLimit
+     * @param pageNo
      * @param modelMap
      * @return
      */
-    Pagination getBrandList(String name, Integer isDisplay, SortLimit sortLimit, ModelMap modelMap);
+    Pagination getBrandList(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap);
 
     /**
      * 添加品牌
@@ -52,4 +53,11 @@ public interface BrandService {
      * @return
      */
     Brand getBrandByKey(Integer id);
+
+    /**
+     * 品牌集合
+     * @param brandQuery
+     * @return
+     */
+    List<Brand> getBrandList(BrandQuery brandQuery);
 }

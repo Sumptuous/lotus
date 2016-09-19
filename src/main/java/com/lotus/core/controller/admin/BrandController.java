@@ -25,13 +25,12 @@ public class BrandController {
      * 获取品牌列表
      * @param name
      * @param isDisplay
-     * @param sortLimit
      * @param modelMap
      * @return
      */
     @RequestMapping("/list.do")
-    public String list(String name, Integer isDisplay, SortLimit sortLimit, ModelMap modelMap){
-        brandService.getBrandList(name, isDisplay, sortLimit, modelMap);
+    public String list(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap){
+        brandService.getBrandList(name, isDisplay, pageNo, modelMap);
         return "brand/list";
     }
 
