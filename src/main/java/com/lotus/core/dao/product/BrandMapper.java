@@ -20,6 +20,10 @@ public interface BrandMapper {
      */
     List<Brand> getBrandListWithPage(BrandQuery brand);
 
+    List<Brand> getBrandListWith(Brand brand);
+
+    int getBrand(Brand brand);
+
     /**
      * 品牌总记录数
      * @param brand

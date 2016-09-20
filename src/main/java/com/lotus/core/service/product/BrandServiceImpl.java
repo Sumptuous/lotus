@@ -25,29 +25,13 @@ public class BrandServiceImpl implements BrandService {
     private BrandMapper brandMapper;
 
     @Transactional(readOnly = true)
-    public Pagination getBrandList(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap) {
+    public Pagination getBrandListWithPage(BrandQuery brand) {
 
-        StringBuilder params = new StringBuilder();
-        BrandQuery brand = new BrandQuery();
-        if (StringUtils.isNotBlank(name)){
-            brand.setName(name);
-            params.append("name=").append(name);
-        }
-        brand.setIsDisplay(isDisplay);
-        params.append("&").append("isDisplay=").append(isDisplay);
-
-        //如果页号为null 或小于1  置为1
-        brand.setPageNo(Pagination.cpn(pageNo));
         int brandCount = brandMapper.getBrandCount(brand);
         List<Brand> getBrandList = brandMapper.getBrandListWithPage(brand);
         Pagination pagination = new Pagination(brand.getPageNo(), brand.getPageSize(), brandCount);
         pagination.setList(getBrandList);
 
-        String url = "/brand/list.do";
-        pagination.pageView(url, params.toString());
-        modelMap.addAttribute("pagination", pagination);
-        modelMap.addAttribute("name", name);
-        modelMap.addAttribute("isDisplay", isDisplay);
         return pagination;
     }
 

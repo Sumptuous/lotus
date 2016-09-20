@@ -3,6 +3,7 @@ package com.lotus.core.controller.admin;
 import com.lotus.common.page.Pagination;
 import com.lotus.common.page.SortLimit;
 import com.lotus.core.bean.product.Brand;
+import com.lotus.core.query.product.BrandQuery;
 import com.lotus.core.service.product.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,27 @@ public class BrandController {
      */
     @RequestMapping("/list.do")
     public String list(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap){
-        brandService.getBrandList(name, isDisplay, pageNo, modelMap);
+
+        StringBuilder params = new StringBuilder();
+        BrandQuery brand = new BrandQuery();
+        if (StringUtils.isNotBlank(name)){
+            brand.setName(name);
+            params.append("name=").append(name);
+        }
+        if (null != isDisplay){
+            brand.setIsDisplay(isDisplay);
+            params.append("&").append("isDisplay=").append(isDisplay);
+        }
+
+        //如果页号为null 或小于1  置为1
+        brand.setPageNo(Pagination.cpn(pageNo));
+        Pagination pagination = brandService.getBrandListWithPage(brand);
+
+        String url = "/brand/list.do";
+        pagination.pageView(url, params.toString());
+        modelMap.addAttribute("pagination", pagination);
+        modelMap.addAttribute("name", name);
+        modelMap.addAttribute("isDisplay", isDisplay);
         return "brand/list";
     }
 

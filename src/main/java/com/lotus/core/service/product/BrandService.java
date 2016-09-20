@@ -15,13 +15,10 @@ public interface BrandService {
 
     /**
      * 品牌列表
-     * @param name
-     * @param isDisplay
-     * @param pageNo
-     * @param modelMap
+     * @param brandQuery
      * @return
      */
-    Pagination getBrandList(String name, Integer isDisplay, Integer pageNo, ModelMap modelMap);
+    Pagination getBrandListWithPage(BrandQuery brandQuery);
 
     /**
      * 添加品牌

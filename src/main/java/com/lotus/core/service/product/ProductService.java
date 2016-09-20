@@ -1,6 +1,8 @@
 package com.lotus.core.service.product;
 
 import com.lotus.common.page.Pagination;
+import com.lotus.core.query.product.BrandQuery;
+import com.lotus.core.query.product.ProductQuery;
 import org.springframework.ui.ModelMap;
 
 /**
@@ -8,5 +10,5 @@ import org.springframework.ui.ModelMap;
  */
 public interface ProductService {
 
-    Pagination getProductListWithPage(Integer pageNo,String name,Integer brandId,Integer isShow,ModelMap model);
+    Pagination getProductListWithPage(ProductQuery productQuery);
 }

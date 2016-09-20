@@ -10,7 +10,7 @@ function getTableForm() {
 	return document.getElementById('tableForm');
 }
 function optDelete() {
-	if(Pn.checkedCount('ids')<=0) {
+	if(!Pn.checkedCount('ids')>0) {
 		alert("请至少选择一个!");
 		return;
 	}
@@ -72,39 +72,23 @@ function changePageNo(){
 			<td align="center">${entry.id }</td>
 			<td align="center">${entry.name }</td>
 			<td align="center"><img width="50" height="50"/></td>
-			<td align="center"><c:if test="${entry.isNew == 1}">是</c:if><c:if test="${entry.isNew == 0}">不是</c:if></td>
-			<td align="center"><c:if test="${entry.isHot == 1}">是</c:if><c:if test="${entry.isHot == 0}">不是</c:if></td>
-			<td align="center"><c:if test="${entry.isCommend == 1}">是</c:if><c:if test="${entry.isCommend == 0}">不是</c:if></td>
-			<td align="center"><c:if test="${entry.isShow == 1}">是</c:if><c:if test="${entry.isShow == 0}">不是</c:if></td>
+			<td align="center"><c:if test="${entry.isNew == 1}">是</c:if><c:if test="${entry.isNew == 0}">否</c:if></td>
+			<td align="center"><c:if test="${entry.isHot == 1}">是</c:if><c:if test="${entry.isHot == 0}">否</c:if></td>
+			<td align="center"><c:if test="${entry.isCommend == 1}">是</c:if><c:if test="${entry.isCommend == 0}">否</c:if></td>
+			<td align="center"><c:if test="${entry.isShow == 1}">上架</c:if><c:if test="${entry.isShow == 0}">下架</c:if></td>
 			<td align="center">
 				<a href="#" class="pn-opt">查看</a> | <a href="#" class="pn-opt">修改</a> | <a href="#" onclick="if(!confirm('您确定删除吗？')) {return false;}" class="pn-opt">删除</a> | <a href="../sku/list.jsp" class="pn-opt">库存</a>
 			</td>
 		</tr>
 	</c:forEach>
 </table>
-<div class="page pb15"><span class="r inb_a page_b">
-	
-		<font size="2">首页</font>
-	
-		<font size="2">上一页</font>
-	
-		<strong>1</strong>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=2">2</a>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=3">3</a>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=4">4</a>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=5">5</a>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=2"><font size="2">下一页</font></a>
-	
-		<a href="/product/list.do?&amp;isShow=0&amp;pageNo=5"><font size="2">尾页</font></a>
-	
-		共<var>5</var>页 到第<input type="text" size="3" id="PAGENO"/>页 <input type="button" onclick="javascript:window.location.href = '/product/list.do?&amp;isShow=0&amp;pageNo=' + $('#PAGENO').val() " value="确定" class="hand btn60x20" id="skip"/>
-	
-</span></div>
+	<div class="page pb15">
+	<span class="r inb_a page_b">
+		<c:forEach items="${pagination.pageView }" var="page">
+			${page }
+		</c:forEach>
+	</span>
+	</div>
 <div style="margin-top:15px;"><input class="del-button" type="button" value="删除" onclick="optDelete();"/><input class="add" type="button" value="上架" onclick="optDelete();"/><input class="del-button" type="button" value="下架" onclick="optDelete();"/></div>
 </form>
 </div>
