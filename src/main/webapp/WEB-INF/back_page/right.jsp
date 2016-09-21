@@ -14,9 +14,9 @@
         <div class="welcom-con">
         	 <div class="we-txt">
              	  <p>
-                  欢迎使用新巴巴运动网的管理系统！<br />
-                  新巴巴运动网的程序版本： babasportv1.0 【<a href="http://localhost:8080" target="_blank">查看最新版本</a>】<br />
-                  您上次登录的时间是：2014-10-15 <br />
+                  欢迎使用莲花网的管理系统！<br />
+                  莲花网的程序版本： lotus v1.0 【<a href="http://localhost:8080" target="_blank">查看最新版本</a>】<br />
+                  您上次登录的时间是：2016-09-15 <br />
                   已用内存：<span style="color:#0078ff;">100MB</span>&nbsp;&nbsp;&nbsp;&nbsp;剩余内存：<span style="color:#ff8400;">100MB </span>&nbsp;&nbsp;&nbsp;&nbsp;最大内存：<span style="color:#00ac41;">200MB</span>
                   </p>
              </div>
@@ -68,7 +68,7 @@
                  	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="30%" height="30" align="right">操作系统版本：</td>
-                            <td height="30"><span class="black">window 7</span></td>
+                            <td height="30"><span class="black">OS X EI Capitan</span></td>
                         </tr>
                           <tr>
                             <td width="30%" height="30" align="right">操作系统类型：</td>
