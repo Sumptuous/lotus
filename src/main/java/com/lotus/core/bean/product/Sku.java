@@ -1,46 +1,72 @@
 package com.lotus.core.bean.product;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Sku {
+public class Sku implements Serializable {
+    /**
+     * 序列化ID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**主键id*/
     private Integer id;
 
+    /**商品id*/
     private Integer productId;
 
+    /**颜色id*/
     private Integer colorId;
 
+    /**尺码*/
     private String size;
 
+    /**运费 默认10元*/
     private Double deliveFee;
 
+    /**售价*/
     private Double skuPrice;
 
+    /**库存*/
     private Integer stockInventory;
 
+    /**购买限制*/
     private Integer skuUpperLimit;
 
+    /**仓库位置:货架号*/
     private String location;
 
+    /**SKU图片  精确到颜色及尺码对应的图片*/
     private String skuImg;
 
+    /**前台显示排序*/
     private Integer skuSort;
 
+    /**SKU名称*/
     private String skuName;
 
+    /**市场价*/
     private Double marketPrice;
 
+    /***/
     private Date createTime;
 
+    /***/
     private Date updateTime;
 
+    /***/
     private String createUserId;
 
+    /***/
     private String updateUserId;
 
+    /**0,历史 1最新*/
     private Integer lastStatus;
 
+    /**0:赠品,1普通*/
     private Integer skuType;
 
+    /**销量*/
     private Integer sales;
 
     public Integer getId() {
@@ -201,5 +227,31 @@ public class Sku {
 
     public void setSales(Integer sales) {
         this.sales = sales;
+    }
+
+    @Override
+    public String toString() {
+        return "Sku{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", colorId=" + colorId +
+                ", size='" + size + '\'' +
+                ", deliveFee=" + deliveFee +
+                ", skuPrice=" + skuPrice +
+                ", stockInventory=" + stockInventory +
+                ", skuUpperLimit=" + skuUpperLimit +
+                ", location='" + location + '\'' +
+                ", skuImg='" + skuImg + '\'' +
+                ", skuSort=" + skuSort +
+                ", skuName='" + skuName + '\'' +
+                ", marketPrice=" + marketPrice +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", createUserId='" + createUserId + '\'' +
+                ", updateUserId='" + updateUserId + '\'' +
+                ", lastStatus=" + lastStatus +
+                ", skuType=" + skuType +
+                ", sales=" + sales +
+                '}';
     }
 }

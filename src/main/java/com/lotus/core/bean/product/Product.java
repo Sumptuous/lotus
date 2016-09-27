@@ -1,8 +1,14 @@
 package com.lotus.core.bean.product;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Product {
+public class Product implements Serializable {
+    /**
+     * 序列化ID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**主键id*/
     private Integer id;
 
@@ -254,5 +260,34 @@ public class Product {
 
     public void setImg(Img img) {
         this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", weight=" + weight +
+                ", isNew=" + isNew +
+                ", isHot=" + isHot +
+                ", isCommend=" + isCommend +
+                ", createTime=" + createTime +
+                ", createUserId='" + createUserId + '\'' +
+                ", checkTime=" + checkTime +
+                ", checkUserId='" + checkUserId + '\'' +
+                ", isShow=" + isShow +
+                ", isDel=" + isDel +
+                ", typeId=" + typeId +
+                ", brandId=" + brandId +
+                ", keywords='" + keywords + '\'' +
+                ", sales=" + sales +
+                ", feature='" + feature + '\'' +
+                ", color='" + color + '\'' +
+                ", size='" + size + '\'' +
+                ", description='" + description + '\'' +
+                ", packageList='" + packageList + '\'' +
+                ", img=" + img +
+                '}';
     }
 }

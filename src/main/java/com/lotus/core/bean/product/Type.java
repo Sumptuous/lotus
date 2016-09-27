@@ -1,14 +1,26 @@
 package com.lotus.core.bean.product;
 
-public class Type {
+import java.io.Serializable;
+
+public class Type implements Serializable {
+    /**
+     * 序列化ID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**主键id*/
     private Integer id;
 
+    /**名称*/
     private String name;
 
+    /**父id*/
     private Integer parentId;
 
+    /**备注,用于google搜索页面描述*/
     private String note;
 
+    /**是否可见 1:可见 0:不可见*/
     private Boolean isDisplay;
 
     public Integer getId() {
@@ -49,5 +61,16 @@ public class Type {
 
     public void setIsDisplay(Boolean isDisplay) {
         this.isDisplay = isDisplay;
+    }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", note='" + note + '\'' +
+                ", isDisplay=" + isDisplay +
+                '}';
     }
 }

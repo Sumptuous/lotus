@@ -2,25 +2,40 @@ package com.lotus.core.bean.product;
 
 import com.lotus.core.web.Constants;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Brand {
+public class Brand implements Serializable{
+    /**
+     * 序列化ID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**主键id*/
     private Integer id;
 
+    /**品牌名称*/
     private String name;
 
+    /**品牌描述*/
     private String description;
 
+    /**图片路径*/
     private String imgUrl;
 
+    /**品牌网址*/
     private String webSite;
 
+    /**排序:最大最排前*/
     private Integer sort;
 
+    /**是否可见 1:可见 0:不可见*/
     private Integer isDisplay;
 
+    /**创建时间*/
     private Date createTime;
 
+    /**修改时间*/
     private Date modifyTime;
 
     //获取全路径
@@ -129,5 +144,20 @@ public class Brand {
         //计算一次开始行
         this.startRow = (pageNo - 1)*pageSize;
         this.pageNo = pageNo;
+    }
+
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", webSite='" + webSite + '\'' +
+                ", sort=" + sort +
+                ", isDisplay=" + isDisplay +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                '}';
     }
 }

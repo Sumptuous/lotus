@@ -8,10 +8,19 @@ public class Feature implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**主键id*/
 	private Integer id;
+
+	/**名称*/
 	private String name;
+
+	/**对应值*/
 	private String value;
+
+	/**前端排序*/
 	private Integer sort;
+
+	/**是否废弃:1:未废弃,0:废弃了*/
 	private Integer isDel;
 
 	public Integer getId() {

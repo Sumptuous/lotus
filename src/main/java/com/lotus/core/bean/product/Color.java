@@ -1,12 +1,23 @@
 package com.lotus.core.bean.product;
 
-public class Color {
+import java.io.Serializable;
+
+public class Color implements Serializable{
+    /**
+     * 序列化ID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**主键id*/
     private Integer id;
 
+    /**颜色名称*/
     private String name;
 
+    /**父ID为色系*/
     private Integer parentId;
 
+    /**颜色对应的衣服小图*/
     private String imgUrl;
 
     public Integer getId() {
@@ -39,5 +50,15 @@ public class Color {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Color{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
     }
 }

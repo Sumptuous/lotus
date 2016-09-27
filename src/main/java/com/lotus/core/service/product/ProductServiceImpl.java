@@ -55,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
         imgService.addImg(product.getImg());
         //3:保存Sku    9,13,...
         //  S M  ...
-        //实例化一个Sku对象
         Sku sku = new Sku();
         //商品ID
         sku.setProductId(product.getId());
