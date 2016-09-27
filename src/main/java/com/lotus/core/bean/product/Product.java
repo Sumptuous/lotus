@@ -69,6 +69,9 @@ public class Product {
     /**包装清单*/
     private String packageList;
 
+    /**图片*/
+    private Img img;
+
     public String getDescription() {
         return description;
     }
@@ -243,5 +246,13 @@ public class Product {
 
     public void setSize(String size) {
         this.size = size == null ? null : size.trim();
+    }
+
+    public Img getImg() {
+        return img;
+    }
+
+    public void setImg(Img img) {
+        this.img = img;
     }
 }

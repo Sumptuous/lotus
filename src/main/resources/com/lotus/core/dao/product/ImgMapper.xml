@@ -1,82 +1,164 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lotus.core.dao.product.ImgMapper" >
-  <resultMap id="BaseResultMap" type="com.lotus.core.bean.product.Img" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="is_def" property="isDef" jdbcType="BIT" />
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lotus.core.dao.product.ImgMapper">
+  <resultMap id="img" type="Img">
+    <result property="id" column="id" />
+    <result property="productId" column="product_id" />
+    <result property="url" column="url" />
+    <result property="isDef" column="is_def" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, product_id, url, is_def
+  <!-- Select SQL -->
+  <sql id="imgSelector">
+    SELECT
+    <if test="fields != null">
+      ${fields}
+    </if>
+    <if test="fields == null">
+      id,product_id,url,is_def
+    </if>
+    FROM lotus_img
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from lotus_img
-    where id = #{id,jdbcType=INTEGER}
+  <sql id="imgListWhere">
+    <where>
+      <if test="id != null">
+        and id=#{id}
+      </if>
+      <if test="productId != null">
+        and product_id=#{productId}
+      </if>
+      <if test="url != null">
+        <if test="urlLike == false">
+          and url=#{url}
+        </if>
+        <if test="urlLike == true">
+          and  url like "%"#{url}"%"
+        </if>
+      </if>
+      <if test="isDef != null">
+        and is_def=#{isDef}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="imgListOrder">
+    <if test="orderFields != null and orderFields.size >0">
+      order by
+      <foreach collection="orderFields" separator="," item="orderField">
+        ${orderField.fieldName} ${orderField.order}
+      </foreach>
+    </if>
+  </sql>
+
+  <sql id="imgListLimit">
+    <if test="startRow != null">
+      limit #{startRow},#{pageSize}
+    </if>
+  </sql>
+
+  <!-- 根据主键查询 -->
+  <select id="getImgByKey" resultMap="img" parameterType="hashMap">
+    SELECT id,product_id,url,is_def FROM lotus_img
+    WHERE
+    id=#{id}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from lotus_img
-    where id = #{id,jdbcType=INTEGER}
+  <select id="getImgsByKeys" resultMap="img" parameterType="ArrayList">
+    SELECT id,product_id,url,is_def FROM lotus_img
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </select>
+
+  <!-- 根据主键删除 -->
+  <delete id="deleteByKey" parameterType="hashMap">
+    DELETE FROM lotus_img
+    WHERE
+    id=#{id}
   </delete>
-  <insert id="insert" parameterType="com.lotus.core.bean.product.Img" >
-    insert into lotus_img (id, product_id, url, 
-      is_def)
-    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
-      #{isDef,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.lotus.core.bean.product.Img" >
-    insert into lotus_img
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+
+  <!-- 根据主键批量删除 -->
+  <delete id="deleteByKeys">
+    DELETE FROM lotus_img
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!-- 根据主键更新 -->
+  <update id="updateImgByKey" parameterType="Img">
+    UPDATE lotus_img
+    <set>
+      <trim suffixOverrides=",">
+        <if test="id != null">
+          id = #{id},
+        </if>
+        <if test="productId != null">
+          product_id = #{productId},
+        </if>
+        <if test="url != null">
+          url = #{url},
+        </if>
+        <if test="isDef != null">
+          is_def = #{isDef}
+        </if>
+      </trim>
+    </set>
+    WHERE
+    id=#{id}
+  </update>
+  <!-- 分页 -->
+  <select id="getImgListWithPage" parameterType="ImgQuery" resultMap="img">
+    <include refid="imgSelector" />
+    <include refid="imgListWhere" />
+    <include refid="imgListOrder" />
+    <include refid="imgListLimit" />
+  </select>
+  <!-- 数据总数 -->
+  <select id="getImgListCount" parameterType="ImgQuery" resultType="int">
+    SELECT count(1) FROM lotus_img
+    <include refid="imgListWhere" />
+  </select>
+  <!-- 数据集合 -->
+  <select id="getImgList" parameterType="ImgQuery" resultMap="img">
+    <include refid="imgSelector" />
+    <include refid="imgListWhere" />
+    <include refid="imgListOrder" />
+  </select>
+  <!-- 添加 -->
+  <insert id="addImg" parameterType="Img">
+    INSERT INTO lotus_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="productId != null" >
+      <if test="productId != null">
         product_id,
       </if>
-      <if test="url != null" >
+      <if test="url != null">
         url,
       </if>
-      <if test="isDef != null" >
-        is_def,
+      <if test="isDef != null">
+        is_def
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
       </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=INTEGER},
+      <if test="productId != null">
+        #{productId},
       </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
+      <if test="url != null">
+        #{url},
       </if>
-      <if test="isDef != null" >
-        #{isDef,jdbcType=BIT},
+      <if test="isDef != null">
+        #{isDef}
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lotus.core.bean.product.Img" >
-    update lotus_img
-    <set >
-      <if test="productId != null" >
-        product_id = #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="isDef != null" >
-        is_def = #{isDef,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lotus.core.bean.product.Img" >
-    update lotus_img
-    set product_id = #{productId,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR},
-      is_def = #{isDef,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

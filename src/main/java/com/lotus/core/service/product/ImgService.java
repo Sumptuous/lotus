@@ -1,62 +1,69 @@
-package com.lotus.core.dao.product;
+package com.lotus.core.service.product;
 
+import com.lotus.common.page.Pagination;
 import com.lotus.core.bean.product.Img;
 import com.lotus.core.query.product.ImgQuery;
 
 import java.util.List;
 
-public interface ImgMapper {
+/**
+ * @author wyy
+ */
+public interface ImgService {
+
     /**
-     * 添加
-     * @param img
+     * 基本插入
+     *
+     * @return
      */
     Integer addImg(Img img);
 
     /**
-     * 根据主键查找
-     * @param id
+     * 根据主键查询
      */
     Img getImgByKey(Integer id);
 
     /**
-     * 根据主键批量查找
-     * @param idList
+     * 根据主键批量查询
      */
     List<Img> getImgsByKeys(List<Integer> idList);
 
     /**
      * 根据主键删除
-     * @param id
+     *
+     * @return
      */
     Integer deleteByKey(Integer id);
 
     /**
      * 根据主键批量删除
-     * @param idList
+     *
+     * @return
      */
     Integer deleteByKeys(List<Integer> idList);
 
     /**
      * 根据主键更新
-     * @param img
+     *
+     * @return
      */
     Integer updateImgByKey(Img img);
 
     /**
-     * 分页查询
+     * 根据条件查询分页查询
+     *
      * @param imgQuery
+     *            查询条件
+     * @return
      */
-    List<Img> getImgListWithPage(ImgQuery imgQuery);
+    Pagination getImgListWithPage(ImgQuery imgQuery);
 
     /**
-     * 集合查询
+     * 根据条件查询
+     *
      * @param imgQuery
+     *            查询条件
+     * @return
      */
     List<Img> getImgList(ImgQuery imgQuery);
-
-    /**
-     * 总条数
-     * @param imgQuery
-     */
-    int getImgListCount(ImgQuery imgQuery);
 }

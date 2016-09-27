@@ -7,7 +7,7 @@ public interface SkuMapper {
 
     int insert(Sku record);
 
-    int insertSelective(Sku record);
+    Integer addSku(Sku record);
 
     Sku selectByPrimaryKey(Integer id);
 

@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lotus.core.dao.product.ProductMapper" >
-  <resultMap id="BaseResultMap" type="com.lotus.core.bean.product.Product" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="no" property="no" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="weight" property="weight" jdbcType="DOUBLE" />
-    <result column="is_new" property="isNew" jdbcType="BIT" />
-    <result column="is_hot" property="isHot" jdbcType="BIT" />
-    <result column="is_commend" property="isCommend" jdbcType="BIT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
-    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
-    <result column="check_user_id" property="checkUserId" jdbcType="VARCHAR" />
-    <result column="is_show" property="isShow" jdbcType="BIT" />
-    <result column="is_del" property="isDel" jdbcType="BIT" />
-    <result column="type_id" property="typeId" jdbcType="INTEGER" />
-    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
-    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
-    <result column="sales" property="sales" jdbcType="INTEGER" />
-    <result column="feature" property="feature" jdbcType="VARCHAR" />
-    <result column="color" property="color" jdbcType="VARCHAR" />
-    <result column="size" property="size" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="LONGVARCHAR" />
-    <result column="package_list" property="packageList" jdbcType="LONGVARCHAR" />
-  </resultMap>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<mapper namespace="com.lotus.core.dao.product.ProductMapper">
+  <resultMap id="product" type="Product">
+    <result property="id" column="id" />
+    <result property="no" column="no" />
+    <result property="name" column="name" />
+    <result property="weight" column="weight" />
+    <result property="isNew" column="is_new" />
+    <result property="isHot" column="is_hot" />
+    <result property="isCommend" column="is_commend" />
+    <result property="createTime" column="create_time" />
+    <result property="createUserId" column="create_user_id" />
+    <result property="checkTime" column="check_time" />
+    <result property="checkUserId" column="check_user_id" />
+    <result property="isShow" column="is_show" />
+    <result property="isDel" column="is_del" />
+    <result property="typeId" column="type_id" />
+    <result property="brandId" column="brand_id" />
+    <result property="keywords" column="keywords" />
+    <result property="sales" column="sales" />
+    <result property="description" column="description" />
+    <result property="packageList" column="package_list" />
+    <result property="feature" column="feature" />
+    <result property="color" column="color" />
+    <result property="size" column="size" />
+  </resultMap>
   <!-- Select SQL -->
   <sql id="productSelector">
-    select
-        <if test="fields != null">
-          ${fields}
-        </if>
-        <if test="fields == null">
-          id, no, name, weight, is_new, is_hot, is_commend, create_time, create_user_id, check_time,
-          check_user_id, is_show, is_del, type_id, brand_id, keywords, sales, feature, color,
-          size, description, package_list
-        </if>
-    from lotus_product
+    SELECT
+    <if test="fields != null">
+      ${fields}
+    </if>
+    <if test="fields == null">
+      id,no,name,weight,is_new,is_hot,is_commend,create_time,create_user_id,check_time,check_user_id,is_show,is_del,type_id,brand_id,keywords,sales,description,package_list,feature,color,size
+    </if>
+    FROM lotus_product
   </sql>
   <sql id="productListWhere">
     <where>
@@ -161,11 +159,11 @@
   </sql>
 
   <sql id="productListOrder">
-    <if test="orderFields != null and orderFields.size > 0">
+    <if test="orderFields != null and orderFields.size >0">
       order by
-          <foreach collection="orderFields" separator="," item="orderFields">
-            ${orderField.fieldName} ${orderField.order}
-          </foreach>
+      <foreach collection="orderFields" separator="," item="orderField">
+        ${orderField.fieldName} ${orderField.order}
+      </foreach>
     </if>
   </sql>
 
@@ -175,122 +173,116 @@
     </if>
   </sql>
 
-  <insert id="insert" parameterType="com.lotus.core.bean.product.Product" >
-    insert into lotus_product (id, no, name, 
-      weight, is_new, is_hot, is_commend, 
-      create_time, create_user_id, check_time, 
-      check_user_id, is_show, is_del, 
-      type_id, brand_id, keywords, 
-      sales, feature, color, 
-      size, description, package_list
-      )
-    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{weight,jdbcType=DOUBLE}, #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{isCommend,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
-      #{checkUserId,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, #{isDel,jdbcType=BIT}, 
-      #{typeId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{keywords,jdbcType=VARCHAR}, 
-      #{sales,jdbcType=INTEGER}, #{feature,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
-      #{size,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{packageList,jdbcType=LONGVARCHAR}
-      )
-  </insert>
+  <!-- 根据主键查询 -->
+  <select id="getProductByKey" resultMap="product" parameterType="hashMap">
+    SELECT id,no,name,weight,is_new,is_hot,is_commend,create_time,create_user_id,check_time,check_user_id,is_show,is_del,type_id,brand_id,keywords,sales,description,package_list,feature,color,size FROM lotus_product
+    WHERE
+    id=#{id}
+  </select>
+  <select id="getProductsByKeys" resultMap="product" parameterType="ArrayList">
+    SELECT id,no,name,weight,is_new,is_hot,is_commend,create_time,create_user_id,check_time,check_user_id,is_show,is_del,type_id,brand_id,keywords,sales,description,package_list,feature,color,size FROM lotus_product
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </select>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.lotus.core.bean.product.Product" >
-    update lotus_product
-    <set >
-      <if test="no != null" >
-        no = #{no,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="weight != null" >
-        weight = #{weight,jdbcType=DOUBLE},
-      </if>
-      <if test="isNew != null" >
-        is_new = #{isNew,jdbcType=BIT},
-      </if>
-      <if test="isHot != null" >
-        is_hot = #{isHot,jdbcType=BIT},
-      </if>
-      <if test="isCommend != null" >
-        is_commend = #{isCommend,jdbcType=BIT},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserId != null" >
-        create_user_id = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="checkTime != null" >
-        check_time = #{checkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="checkUserId != null" >
-        check_user_id = #{checkUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="isShow != null" >
-        is_show = #{isShow,jdbcType=BIT},
-      </if>
-      <if test="isDel != null" >
-        is_del = #{isDel,jdbcType=BIT},
-      </if>
-      <if test="typeId != null" >
-        type_id = #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="brandId != null" >
-        brand_id = #{brandId,jdbcType=INTEGER},
-      </if>
-      <if test="keywords != null" >
-        keywords = #{keywords,jdbcType=VARCHAR},
-      </if>
-      <if test="sales != null" >
-        sales = #{sales,jdbcType=INTEGER},
-      </if>
-      <if test="feature != null" >
-        feature = #{feature,jdbcType=VARCHAR},
-      </if>
-      <if test="color != null" >
-        color = #{color,jdbcType=VARCHAR},
-      </if>
-      <if test="size != null" >
-        size = #{size,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="packageList != null" >
-        package_list = #{packageList,jdbcType=LONGVARCHAR},
-      </if>
+  <!-- 根据主键删除 -->
+  <delete id="deleteByKey" parameterType="hashMap">
+    DELETE FROM lotus_product
+    WHERE
+    id=#{id}
+  </delete>
+
+  <!-- 根据主键批量删除 -->
+  <delete id="deleteByKeys">
+    DELETE FROM lotus_product
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!-- 根据主键更新 -->
+  <update id="updateProductByKey" parameterType="Product">
+    UPDATE lotus_product
+    <set>
+      <trim suffixOverrides=",">
+        <if test="id != null">
+          id = #{id},
+        </if>
+        <if test="no != null">
+          no = #{no},
+        </if>
+        <if test="name != null">
+          name = #{name},
+        </if>
+        <if test="weight != null">
+          weight = #{weight},
+        </if>
+        <if test="isNew != null">
+          is_new = #{isNew},
+        </if>
+        <if test="isHot != null">
+          is_hot = #{isHot},
+        </if>
+        <if test="isCommend != null">
+          is_commend = #{isCommend},
+        </if>
+        <if test="createTime != null">
+          create_time = #{createTime},
+        </if>
+        <if test="createUserId != null">
+          create_user_id = #{createUserId},
+        </if>
+        <if test="checkTime != null">
+          check_time = #{checkTime},
+        </if>
+        <if test="checkUserId != null">
+          check_user_id = #{checkUserId},
+        </if>
+        <if test="isShow != null">
+          is_show = #{isShow},
+        </if>
+        <if test="isDel != null">
+          is_del = #{isDel},
+        </if>
+        <if test="typeId != null">
+          type_id = #{typeId},
+        </if>
+        <if test="brandId != null">
+          brand_id = #{brandId},
+        </if>
+        <if test="keywords != null">
+          keywords = #{keywords},
+        </if>
+        <if test="sales != null">
+          sales = #{sales},
+        </if>
+        <if test="description != null">
+          description = #{description},
+        </if>
+        <if test="packageList != null">
+          package_list = #{packageList},
+        </if>
+        <if test="feature != null">
+          feature = #{feature},
+        </if>
+        <if test="color != null">
+          color = #{color},
+        </if>
+        <if test="size != null">
+          size = #{size}
+        </if>
+      </trim>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    WHERE
+    id=#{id}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.lotus.core.bean.product.Product" >
-    update lotus_product
-    set no = #{no,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      weight = #{weight,jdbcType=DOUBLE},
-      is_new = #{isNew,jdbcType=BIT},
-      is_hot = #{isHot,jdbcType=BIT},
-      is_commend = #{isCommend,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user_id = #{createUserId,jdbcType=VARCHAR},
-      check_time = #{checkTime,jdbcType=TIMESTAMP},
-      check_user_id = #{checkUserId,jdbcType=VARCHAR},
-      is_show = #{isShow,jdbcType=BIT},
-      is_del = #{isDel,jdbcType=BIT},
-      type_id = #{typeId,jdbcType=INTEGER},
-      brand_id = #{brandId,jdbcType=INTEGER},
-      keywords = #{keywords,jdbcType=VARCHAR},
-      sales = #{sales,jdbcType=INTEGER},
-      feature = #{feature,jdbcType=VARCHAR},
-      color = #{color,jdbcType=VARCHAR},
-      size = #{size,jdbcType=VARCHAR},
-      description = #{description,jdbcType=LONGVARCHAR},
-      package_list = #{packageList,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-
   <!-- 分页 -->
-  <select id="getProductListWithPage" parameterType="ProductQuery" resultMap="BaseResultMap">
+  <select id="getProductListWithPage" parameterType="ProductQuery" resultMap="product">
     <include refid="productSelector" />
     <include refid="productListWhere" />
     <include refid="productListOrder" />
@@ -301,4 +293,151 @@
     SELECT count(1) FROM lotus_product
     <include refid="productListWhere" />
   </select>
+  <!-- 数据集合 -->
+  <select id="getProductList" parameterType="ProductQuery" resultMap="product">
+    <include refid="productSelector" />
+    <include refid="productListWhere" />
+    <include refid="productListOrder" />
+  </select>
+  <!-- 添加 -->
+  <insert id="addProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO lotus_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="no != null">
+        no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="isNew != null">
+        is_new,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isCommend != null">
+        is_commend,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="checkUserId != null">
+        check_user_id,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="keywords != null">
+        keywords,
+      </if>
+      <if test="sales != null">
+        sales,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="packageList != null">
+        package_list,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="size != null">
+        size
+      </if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="no != null">
+        #{no},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="weight != null">
+        #{weight},
+      </if>
+      <if test="isNew != null">
+        #{isNew},
+      </if>
+      <if test="isHot != null">
+        #{isHot},
+      </if>
+      <if test="isCommend != null">
+        #{isCommend},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime},
+      </if>
+      <if test="checkUserId != null">
+        #{checkUserId},
+      </if>
+      <if test="isShow != null">
+        #{isShow},
+      </if>
+      <if test="isDel != null">
+        #{isDel},
+      </if>
+      <if test="typeId != null">
+        #{typeId},
+      </if>
+      <if test="brandId != null">
+        #{brandId},
+      </if>
+      <if test="keywords != null">
+        #{keywords},
+      </if>
+      <if test="sales != null">
+        #{sales},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="packageList != null">
+        #{packageList},
+      </if>
+      <if test="feature != null">
+        #{feature},
+      </if>
+      <if test="color != null">
+        #{color},
+      </if>
+      <if test="size != null">
+        #{size}
+      </if>
+    </trim>
+  </insert>
 </mapper>

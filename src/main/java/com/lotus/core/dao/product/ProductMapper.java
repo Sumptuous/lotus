@@ -6,29 +6,58 @@ import com.lotus.core.query.product.ProductQuery;
 import java.util.List;
 
 public interface ProductMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(Product record);
+    /**
+     * 添加
+     * @param product
+     */
+    Integer addProduct(Product product);
 
-    int insertSelective(Product record);
+    /**
+     * 根据主键查找
+     * @param id
+     */
+    Product getProductByKey(Integer id);
 
-    Product selectByPrimaryKey(Integer id);
+    /**
+     * 根据主键批量查找
+     * @param idList
+     */
+    List<Product> getProductsByKeys(List<Integer> idList);
 
-    int updateByPrimaryKeySelective(Product record);
+    /**
+     * 根据主键删除
+     * @param id
+     */
+    Integer deleteByKey(Integer id);
 
-    int updateByPrimaryKeyWithBLOBs(Product record);
+    /**
+     * 根据主键批量删除
+     * @param idList
+     */
+    Integer deleteByKeys(List<Integer> idList);
 
-    int updateByPrimaryKey(Product record);
+    /**
+     * 根据主键更新
+     * @param product
+     */
+    Integer updateProductByKey(Product product);
 
     /**
      * 分页查询
      * @param productQuery
      */
-    public List<Product> getProductListWithPage(ProductQuery productQuery);
+    List<Product> getProductListWithPage(ProductQuery productQuery);
+
+    /**
+     * 集合查询
+     * @param productQuery
+     */
+    List<Product> getProductList(ProductQuery productQuery);
 
     /**
      * 总条数
      * @param productQuery
      */
-    public int getProductListCount(ProductQuery productQuery);
+    int getProductListCount(ProductQuery productQuery);
 }

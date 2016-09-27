@@ -54,7 +54,7 @@
       #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR}, #{lastStatus,jdbcType=INTEGER}, 
       #{skuType,jdbcType=INTEGER}, #{sales,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.lotus.core.bean.product.Sku" >
+  <insert id="addSku" parameterType="com.lotus.core.bean.product.Sku" >
     insert into lotus_sku
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

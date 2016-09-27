@@ -1,93 +1,182 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lotus.core.dao.product.FeatureMapper" >
-  <resultMap id="BaseResultMap" type="com.lotus.core.bean.product.Feature" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="value" property="value" jdbcType="VARCHAR" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="is_del" property="isDel" jdbcType="BIT" />
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lotus.core.dao.product.FeatureMapper">
+  <resultMap id="feature" type="Feature">
+    <result property="id" column="id" />
+    <result property="name" column="name" />
+    <result property="value" column="value" />
+    <result property="sort" column="sort" />
+    <result property="isDel" column="is_del" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, value, sort, is_del
+  <!-- Select SQL -->
+  <sql id="featureSelector">
+    SELECT
+    <if test="fields != null">
+      ${fields}
+    </if>
+    <if test="fields == null">
+      id,name,value,sort,is_del
+    </if>
+    FROM lotus_feature
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from lotus_feature
-    where id = #{id,jdbcType=INTEGER}
+  <sql id="featureListWhere">
+    <where>
+      <if test="id != null">
+        and id=#{id}
+      </if>
+      <if test="name != null">
+        <if test="nameLike == false">
+          and name=#{name}
+        </if>
+        <if test="nameLike == true">
+          and  name like "%"#{name}"%"
+        </if>
+      </if>
+      <if test="value != null">
+        <if test="valueLike == false">
+          and value=#{value}
+        </if>
+        <if test="valueLike == true">
+          and  value like "%"#{value}"%"
+        </if>
+      </if>
+      <if test="sort != null">
+        and sort=#{sort}
+      </if>
+      <if test="isDel != null">
+        and is_del=#{isDel}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="featureListOrder">
+    <if test="orderFields != null and orderFields.size >0">
+      order by
+      <foreach collection="orderFields" separator="," item="orderField">
+        ${orderField.fieldName} ${orderField.order}
+      </foreach>
+    </if>
+  </sql>
+
+  <sql id="featureListLimit">
+    <if test="startRow != null">
+      limit #{startRow},#{pageSize}
+    </if>
+  </sql>
+
+  <!-- 根据主键查询 -->
+  <select id="getFeatureByKey" resultMap="feature" parameterType="hashMap">
+    SELECT id,name,value,sort,is_del FROM lotus_feature
+    WHERE
+    id=#{id}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from lotus_feature
-    where id = #{id,jdbcType=INTEGER}
+  <select id="getFeaturesByKeys" resultMap="feature" parameterType="ArrayList">
+    SELECT id,name,value,sort,is_del FROM lotus_feature
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </select>
+
+  <!-- 根据主键删除 -->
+  <delete id="deleteByKey" parameterType="hashMap">
+    DELETE FROM lotus_feature
+    WHERE
+    id=#{id}
   </delete>
-  <insert id="insert" parameterType="com.lotus.core.bean.product.Feature" >
-    insert into lotus_feature (id, name, value, 
-      sort, is_del)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER}, #{isDel,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.lotus.core.bean.product.Feature" >
-    insert into lotus_feature
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+
+  <!-- 根据主键批量删除 -->
+  <delete id="deleteByKeys">
+    DELETE FROM lotus_feature
+    WHERE
+    id in
+    <foreach collection="list" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!-- 根据主键更新 -->
+  <update id="updateFeatureByKey" parameterType="Feature">
+    UPDATE lotus_feature
+    <set>
+      <trim suffixOverrides=",">
+        <if test="id != null">
+          id = #{id},
+        </if>
+        <if test="name != null">
+          name = #{name},
+        </if>
+        <if test="value != null">
+          value = #{value},
+        </if>
+        <if test="sort != null">
+          sort = #{sort},
+        </if>
+        <if test="isDel != null">
+          is_del = #{isDel}
+        </if>
+      </trim>
+    </set>
+    WHERE
+    id=#{id}
+  </update>
+  <!-- 分页 -->
+  <select id="getFeatureListWithPage" parameterType="FeatureQuery" resultMap="feature">
+    <include refid="featureSelector" />
+    <include refid="featureListWhere" />
+    <include refid="featureListOrder" />
+    <include refid="featureListLimit" />
+  </select>
+  <!-- 数据总数 -->
+  <select id="getFeatureListCount" parameterType="FeatureQuery" resultType="int">
+    SELECT count(1) FROM bbs_feature
+    <include refid="featureListWhere" />
+  </select>
+  <!-- 数据集合 -->
+  <select id="getFeatureList" parameterType="FeatureQuery" resultMap="feature">
+    <include refid="featureSelector" />
+    <include refid="featureListWhere" />
+    <include refid="featureListOrder" />
+  </select>
+  <!-- 添加 -->
+  <insert id="addFeature" parameterType="Feature">
+    INSERT INTO lotus_feature
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name,
       </if>
-      <if test="value != null" >
+      <if test="value != null">
         value,
       </if>
-      <if test="sort != null" >
+      <if test="sort != null">
         sort,
       </if>
-      <if test="isDel != null" >
-        is_del,
+      <if test="isDel != null">
+        is_del
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name},
       </if>
-      <if test="value != null" >
-        #{value,jdbcType=VARCHAR},
+      <if test="value != null">
+        #{value},
       </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
+      <if test="sort != null">
+        #{sort},
       </if>
-      <if test="isDel != null" >
-        #{isDel,jdbcType=BIT},
+      <if test="isDel != null">
+        #{isDel}
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lotus.core.bean.product.Feature" >
-    update lotus_feature
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null" >
-        value = #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="isDel != null" >
-        is_del = #{isDel,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lotus.core.bean.product.Feature" >
-    update lotus_feature
-    set name = #{name,jdbcType=VARCHAR},
-      value = #{value,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      is_del = #{isDel,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>
