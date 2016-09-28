@@ -37,7 +37,7 @@ public class BrandServiceImpl implements BrandService {
 
     public void addBrand(Brand brand) {
         brand.setCreateTime(new Date());
-        brand.setModifyTime(new Date());
+        brand.setUpdateTime(new Date());
         brandMapper.addBrand(brand);
     }
 
@@ -52,7 +52,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     public void updateBrandByKey(Brand brand) {
-        brand.setModifyTime(new Date());
+        brand.setUpdateTime(new Date());
         brandMapper.updateBrandByKey(brand);
 
     }

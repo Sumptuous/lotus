@@ -36,7 +36,7 @@ public class Brand implements Serializable{
     private Date createTime;
 
     /**修改时间*/
-    private Date modifyTime;
+    private Date updateTime;
 
     //获取全路径
     public String getAllUrl(){
@@ -107,12 +107,12 @@ public class Brand implements Serializable{
         this.createTime = createTime;
     }
 
-    public Date getModifyTime() {
-        return modifyTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     //页号
@@ -157,7 +157,7 @@ public class Brand implements Serializable{
                 ", sort=" + sort +
                 ", isDisplay=" + isDisplay +
                 ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

@@ -26,4 +26,11 @@ public interface ProductService {
      * @return
      */
     Pagination getProductListWithPage(ProductQuery productQuery);
+
+    /**
+     * 根据主键更新
+     *
+     * @return
+     */
+    Integer updateProductByKey(Product product);
 }

@@ -149,4 +149,46 @@ public class ProductController {
 
         return "redirect:/product/list.do";
     }
+
+    /**
+     * 上架
+     * @param ids
+     * @param pageNo
+     * @param name
+     * @param brandId
+     * @param isShow
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/isShow.do")
+    public String isShow(Integer[] ids,Integer pageNo,String name,Integer brandId,Integer isShow,ModelMap model){
+        //实例化商品
+        Product product = new Product();
+        product.setIsShow(1);
+        //上架
+        if(null != ids && ids.length >0){
+            for(Integer id : ids){
+                product.setId(id);
+                //修改上架状态
+                productService.updateProductByKey(product);
+            }
+        }
+        //TODO  静态化
+
+        //判断
+        if(null != pageNo){
+            model.addAttribute("pageNo", pageNo);
+        }
+        if(StringUtils.isNotBlank(name)){
+            model.addAttribute("name", name);
+        }
+        if(null != brandId){
+            model.addAttribute("brandId", brandId);
+        }
+        if(null != isShow){
+            model.addAttribute("isShow", isShow);
+        }
+
+        return "redirect:/product/list.do";
+    }
 }
