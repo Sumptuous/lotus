@@ -9,6 +9,9 @@ public class Product implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
+    /**  前台每页数  */
+    public static final int FRONT_PAGE_SIZE = 8;
+
     /**主键id*/
     private Integer id;
 
