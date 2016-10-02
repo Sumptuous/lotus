@@ -3,7 +3,7 @@
 /target
 /.classpath
 /.project
-/.idea
+*.idea
 /src/main/node_modules
 /bin/
 *.iml

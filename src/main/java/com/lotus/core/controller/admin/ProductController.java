@@ -10,8 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author wyy
@@ -35,7 +34,21 @@ public class ProductController {
     @Autowired
     private ColorService colorService;
 
-    //商品列表
+    @Autowired
+    private SkuService skuService;
+
+    @Autowired
+    private StaticPageService staticPageService;
+
+    /**
+     * 商品列表
+     * @param pageNo
+     * @param name
+     * @param brandId
+     * @param isShow
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/list.do")
     public String list(Integer pageNo,String name,Integer brandId,Integer isShow,ModelMap model){
 
@@ -171,9 +184,31 @@ public class ProductController {
                 product.setId(id);
                 //修改上架状态
                 productService.updateProductByKey(product);
+
+                //页面静态化
+                Map<String,Object> root = new HashMap<String,Object>();
+                //设置值
+                //商品加载
+                Product p = productService.getProductByKey(id);
+
+                root.put("product", p);
+
+                //skus
+                List<Sku> skus = skuService.getStock(id);
+                root.put("skus", skus);
+                //去重复
+                List<Color>  colors = new ArrayList<Color>();
+                //遍历SKu
+                for(Sku sku : skus){
+                    //判断集合中是否已经有此颜色对象了
+                    if(!colors.contains(sku.getColor())){
+                        colors.add(sku.getColor());
+                    }
+                }
+                root.put("colors", colors);
+                staticPageService.productIndex(root, id);
             }
         }
-        //TODO  静态化
 
         //判断
         if(null != pageNo){
