@@ -10,7 +10,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<title>新巴巴运动网-电子商城</title>
+<title>莲花网-电子商城</title>
 <link rel="stylesheet" href="/res/css/style.css" />
 <script src="/res/js/jquery.js"></script>
 <script src="/res/js/com.js"></script>
@@ -25,11 +25,11 @@ function login(){
 <div class="bar"><div class="bar_w">
 	<p class="l">
 		<span class="l">
-			收藏本网站！北京<a href="#" title="更换">[更换]</a>
+			收藏本网站！上海<a href="#" title="更换">[更换]</a>
 		</span>
 	</p>
 	<ul class="r uls">
-	<li class="dev">您好,欢迎来到新巴巴运动网！</li>
+	<li class="dev">您好,欢迎来到莲花网！</li>
 	<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
 	<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
 	<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
@@ -325,10 +325,10 @@ function login(){
 				<ul class="uls i_150x150 x4_150x150b">
 					<c:forEach items="${pagination.list }" var="entry">
 						<li>
-							<a href="productDetail.jsp" title="${entry.name }" target="_blank" class="pic"><img src="${entry.img.allUrl }" alt="${entry.name }" /></a>
+							<a href="javascript:void(0)" onclick="window.open('/product/detail.shtml?id=${entry.id}')" title="${entry.name }" class="pic"><img src="${entry.img.allUrl }" alt="${entry.name }" /></a>
 							<dl>
 								<!-- dt 10个文字+... -->
-								<dt><a href="productDetail.jsp" title="${entry.name }" target="_blank">${entry.name }</a></dt>
+								<dt><a href="javascript:void(0)"  onclick="window.location.href='/product/detail.shtml?id=${entry.id}'" title="${entry.name }" target="_blank">${entry.name }</a></dt>
 								<!-- dt 25个文字+... -->
 								<dd class="h40">${entry.name }</dd>
 								<dd class="orange">￥128.00</dd>

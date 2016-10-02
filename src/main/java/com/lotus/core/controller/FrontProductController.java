@@ -1,23 +1,18 @@
 package com.lotus.core.controller;
 
 import com.lotus.common.page.Pagination;
-import com.lotus.core.bean.product.Brand;
-import com.lotus.core.bean.product.Feature;
-import com.lotus.core.bean.product.Product;
-import com.lotus.core.bean.product.Type;
+import com.lotus.core.bean.product.*;
 import com.lotus.core.query.product.BrandQuery;
 import com.lotus.core.query.product.FeatureQuery;
 import com.lotus.core.query.product.ProductQuery;
 import com.lotus.core.query.product.TypeQuery;
-import com.lotus.core.service.product.BrandService;
-import com.lotus.core.service.product.FeatureService;
-import com.lotus.core.service.product.ProductService;
-import com.lotus.core.service.product.TypeService;
+import com.lotus.core.service.product.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +22,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/product/display")
+@RequestMapping("/product")
 public class FrontProductController {
 
     @Autowired
@@ -39,6 +34,9 @@ public class FrontProductController {
     @Autowired
     private FeatureService featureService;
 
+    @Autowired
+    private SkuService skuService;
+
     /**
      * 商品列表页面
      * @param pageNo
@@ -49,7 +47,7 @@ public class FrontProductController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/list.shtml")
+    @RequestMapping(value = "/display/list.shtml")
     public String list(Integer pageNo,Integer brandId,String brandName,Integer typeId,String typeName,ModelMap model){
 
 
@@ -137,5 +135,35 @@ public class FrontProductController {
 
 
         return "product/product";
+    }
+
+    /**
+     * 跳转商品详情页
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/detail.shtml")
+    public String detail(Integer id,ModelMap model){
+        //商品加载
+        Product product = productService.getProductByKey(id);
+
+        model.addAttribute("product", product);
+
+        //skus
+        List<Sku> skus = skuService.getStock(id);
+        model.addAttribute("skus", skus);
+        //去重复
+        List<Color>  colors = new ArrayList<Color>();
+        //遍历SKu
+        for(Sku sku : skus){
+            //判断集合中是否已经有此颜色对象了
+            if(!colors.contains(sku.getColor())){
+                colors.add(sku.getColor());
+            }
+        }
+        model.addAttribute("colors", colors);
+
+        return "product/productDetail";
     }
 }

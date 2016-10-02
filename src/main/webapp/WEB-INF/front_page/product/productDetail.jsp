@@ -11,7 +11,7 @@
 <meta http-equiv="description" content="This is my page">
 
 
-<title>新巴巴运动网-商品详情页</title>
+<title>莲花网-商品详情页</title>
 <link rel="stylesheet" href="/res/css/style.css" />
 <script src="/res/js/jquery.js"></script>
 <script type="text/javascript" src="/res/js/com.js"></script>
@@ -42,26 +42,149 @@
 </style>
 </head>
 <script type="text/javascript">
-//加入购物车
-function addCart(){
-	alert("添加购物车成功!");
-}
-//立即购买
-function buy(){
-	window.location.href='cart.jsp';
-}
+	$(function(){
+		//初始化点击第一个颜色
+		$("#colors a:first").trigger("click");
+		//给A标签绑定事件   -
+		$("#sub").click(function(){
+			//件数  1
+			var num = $("#num").val();
+			num--;
+			if(num == 0){
+				//alert();
+				return;
+			}
+			//赋值
+			$("#num").val(num);
+		});
+		//+
+		$("#add").click(function(){
+			//件数  8
+			var num = $("#num").val();
+			num++;
+			//num 9      9
+			if(num > buyLimit){
+				alert("此商品只能买" + buyLimit + "件");
+				return;
+			}
+			//赋值
+			$("#num").val(num);
+		});
+	});
+	//全局变量
+	//颜色ID
+	var colorId;
+	//SkuId
+	var skuId;
+	//限购
+	var buyLimit;
+
+	//点击颜色  ￥128.00  id 颜色ID
+	function colorToRed(target,id){
+		//赋值
+		colorId = id;
+		//先清理其它颜色
+		$("#colors a").each(function(){
+			$(this).attr("class","changToWhite");
+		});
+		//先清理尺码  都变成不可点
+		$("#sizes a").each(function(){
+			$(this).attr("class","not-allow");
+		});
+
+		$(target).attr("class","changToRed");
+		//控制尺码
+		var flag = 0;
+		//
+		<c:forEach items="${skus}" var="sku">
+		//判断SKu中与当前选择的颜色ID一样的,获取出所有尺码
+		if(id == '${sku.colorId}'){
+			//四次  S  L  XL  XXL
+			if(flag == 0){
+				$("#" + '${sku.size}').attr("class","changToRed");
+				flag = 1;
+				//赋值
+				//巴巴价
+				$("#price").html("￥" + '${sku.skuPrice}');
+				//市场价
+				$("#mprice").html("￥" + '${sku.marketPrice}');
+				//运费
+				$("#fee").html('${sku.deliveFee}');
+				//库存
+				$("#stock").html('${sku.stockInventory}');
+				//skuId
+				skuId = '${sku.id}';
+				//
+				//限购
+				buyLimit = '${sku.skuUpperLimit}';
+
+			}else{
+				$("#" + '${sku.size}').attr("class","changToWhite");
+			}
+		}
+		</c:forEach>
+
+	}
+	//点击尺码
+	function sizeToRed(target,id){
+
+		var cc = $(target).attr("class");
+		if(cc == "not-allow"){
+			return ;
+		}
+		//先清理尺码  都变成不可点
+		$("#sizes a").each(function(){
+			var c = $(this).attr("class");
+			if(c != "not-allow"){
+				$(this).attr("class","changToWhite");
+			}
+		});
+		//尺码变红
+		$(target).attr("class","changToRed");
+
+		<c:forEach items="${skus}" var="sku">
+		//判断SKu中与当前选择的颜色ID一样的,获取出所有尺码
+		if(colorId == '${sku.colorId}' && id == '${sku.size}'){
+			//赋值
+			//巴巴价
+			$("#price").html("￥" + '${sku.skuPrice}');
+			//市场价
+			$("#mprice").html("￥" + '${sku.marketPrice}');
+			//运费
+			$("#fee").html('${sku.deliveFee}');
+			//库存
+			$("#stock").html('${sku.stockInventory}');
+			//skuId
+			skuId = '${sku.id}';
+			//
+			//限购
+			buyLimit = '${sku.skuUpperLimit}';
+		}
+		</c:forEach>
+	}
+
+
+	//加入购物车
+	function addCart(){
+		alert("添加购物车成功!");
+	}
+	//立即购买
+	function buy(productId){
+		window.location.href='cart.jsp';
+		//skuId  productId  件数   限购
+	}
 </script>
 </head>
 <body>
 <div class="bar"><div class="bar_w">
 	<p class="l">
 		<span class="l">
-			收藏本网站！北京<a href="#" title="更换">[更换]</a>
+			收藏本网站！上海<a href="#" title="更换">[更换]</a>
 		</span>
 	</p>
 	<ul class="r uls">
 		<li class="dev">
-			您好,欢迎来到新巴巴运动网！
+			您好,欢迎来到莲花网！
 		</li>
 	<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
 	<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
@@ -147,24 +270,24 @@ function buy(){
 	</div>
 	<div class="r" style="width: 640px">
 		<ul class="uls form">
-			<li><h2>依琦莲2014瑜伽服套装新款 瑜珈健身服三件套 广场舞蹈服装 性价比最高的瑜伽服 三件套 送胸垫 支持货到付款</h2></li>
-			<li><label>巴  巴 价：</label><span class="word"><b class="f14 red mr">￥128.00</b>(市场价:<del>￥150.00</del>)</span></li>
+			<li><h2>${product.name }</h2></li>
+			<li><label>莲 花 价：</label><span class="word"><b class="f14 red mr" id="price">￥128.00</b>(市场价:<del id="mprice">￥150.00</del>)</span></li>
 			<li><label>商品评价：</label><span class="word"><span class="val_no val3d4" title="4分">4分</span><var class="blue">(已有888人评价)</var></span></li>
-			<li><label>运　　费：</label><span class="word">10元</span></li>
-			<li><label>库　　存：</label><span class="word" id="stockInventory">100</span><span class="word" >件</span></li>
+			<li><label>运　　费：</label><span class="word" id="fee">10元</span></li>
+			<li><label>库　　存：</label><span class="word" id="stock">100</span><span class="word" >件</span></li>
 			<li><label>选择颜色：</label>
 				<div id="colors" class="pre spec">
-					<a onclick="colorToRed(this,9)" href="javascript:void(0)" title="西瓜红" class="changToRed"><img width="25" height="25" data-img="1" src="/res/img/pic/ppp00.jpg" alt="西瓜红 "><i>西瓜红</i></a>
-					<a onclick="colorToRed(this,11)" href="javascript:void(0)" title="墨绿" class="changToWhite"><img width="25" height="25" data-img="1" src="/res/img/pic/ppp00.jpg" alt="墨绿 "><i>墨绿</i></a>
-					<a onclick="colorToRed(this,18)" href="javascript:void(0)" title="浅粉" class="changToWhite"><img width="25" height="25" data-img="1" src="/res/img/pic/ppp00.jpg" alt="浅粉 "><i>浅粉</i></a>
+					<c:forEach items="${colors }" var="color">
+						<a onclick="colorToRed(this,${color.id})" href="javascript:void(0)" title="${color.name }" class="changToWhite"><img width="25" height="25" data-img="1" src="/res/img/pic/ppp00.jpg" alt="${color.name } "><i>${color.name }</i></a>
+					</c:forEach>
 				</div>
 			</li>
 			<li id="sizes"><label>尺　　码：</label>
-						<a href="javascript:void(0)" class="not-allow"  id="S">S</a>
-						<a href="javascript:void(0)" class="not-allow"  id="M">M</a>
-						<a href="javascript:void(0)" class="not-allow"  id="L">L</a>
-						<a href="javascript:void(0)" class="not-allow"  id="XL">XL</a>
-						<a href="javascript:void(0)" class="not-allow"  id="XXL">XXL</a>
+				<a href="javascript:void(0)" class="not-allow"  id="S" onclick="sizeToRed(this,'S')">S</a>
+				<a href="javascript:void(0)" class="not-allow"  id="M" onclick="sizeToRed(this,'M')">M</a>
+				<a href="javascript:void(0)" class="not-allow"  id="L" onclick="sizeToRed(this,'L')">L</a>
+				<a href="javascript:void(0)" class="not-allow"  id="XL" onclick="sizeToRed(this,'XL')">XL</a>
+				<a href="javascript:void(0)" class="not-allow"  id="XXL" onclick="sizeToRed(this,'XXL')">XXL</a>
 			</li>
 			<li><label>我 要 买：</label>
 				<a id="sub" class="inb arr" style="border: 1px solid #919191;width: 10px;height: 10px;line-height: 10px;text-align: center;" title="减" href="javascript:void(0);" >-</a>

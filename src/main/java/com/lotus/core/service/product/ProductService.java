@@ -19,6 +19,11 @@ public interface ProductService {
     Integer addProduct(Product product);
 
     /**
+     * 根据主键查询
+     */
+    Product getProductByKey(Integer id);
+
+    /**
      * 根据条件查询分页查询
      *
      * @param productQuery
