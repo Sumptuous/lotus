@@ -20,7 +20,7 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
 	private Configuration conf;
 	
 	public void setFreeMarkerConfigurer(FreeMarkerConfigurer freeMarkerConfigurer) {
-		conf = freeMarkerConfigurer.getConfiguration();
+		this.conf = freeMarkerConfigurer.getConfiguration();
 	}
 
 	public void productIndex(Map<String,Object> root,Integer id){
@@ -31,7 +31,7 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
 			//读进来  UTF-8  内存中
 			Template template = conf.getTemplate("productDetail.html");
 			//获取Html的路径
-			String path = getPath("/html/product/" + id +  ".html");//278.html
+			String path = getPath("/html/product/" + id +  ".html");
 			
 			File f = new File(path);
 			File parentFile = f.getParentFile();
@@ -64,6 +64,6 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
 	private ServletContext servletContext;
 
 	public void setServletContext(ServletContext servletContext) {
-		servletContext = servletContext;
+		this.servletContext = servletContext;
 	}
 }

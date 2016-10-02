@@ -17,7 +17,7 @@
 <script type="text/javascript">
 //登陆
 function login(){
-	window.location.href = "../buyer/login.jsp";
+	window.location.href = "/buyer/login.jsp";
 }
 </script>
 </head>

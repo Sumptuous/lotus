@@ -4,6 +4,7 @@ import com.lotus.common.page.Pagination;
 import com.lotus.core.bean.product.*;
 import com.lotus.core.query.product.*;
 import com.lotus.core.service.product.*;
+import com.lotus.core.service.staticpage.StaticPageService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
