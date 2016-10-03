@@ -39,7 +39,17 @@ public class CartController {
 	@Autowired
 	private SessionProvider sessionProvider;
 
-	//购买按钮
+	/**
+	 * 购买按钮
+	 * @param skuId
+	 * @param amount
+	 * @param buyLimit
+	 * @param productId
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/shopping/buyCart.shtml")
 	public String buyCart(Integer skuId,Integer amount,Integer buyLimit,Integer productId,HttpServletRequest request ,HttpServletResponse response,ModelMap model){
 		//1:Sku
@@ -128,7 +138,13 @@ public class CartController {
 		
 		return "product/cart";
 	}
-	//清空购物车
+
+	/**
+	 * 清空购物车
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/shopping/clearCart.shtml")
 	public String clearCart(HttpServletRequest request,HttpServletResponse response){
 
@@ -140,7 +156,14 @@ public class CartController {
 		
 		return "redirect:/shopping/buyCart.shtml";
 	}
-	//删除一个购物项
+
+	/**
+	 * 删除一个购物项
+	 * @param request
+	 * @param skuId
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/shopping/deleteItem.shtml")
 	public String deleteItem(HttpServletRequest request,Integer skuId,HttpServletResponse response){
 		//springmvc 
@@ -208,7 +231,14 @@ public class CartController {
 		}
 		return "redirect:/shopping/buyCart.shtml";
 	}
-	//结算
+
+	/**
+	 * 结算
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/buyer/trueBuy.shtml")
 	public String trueBuy(HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		//springmvc 
