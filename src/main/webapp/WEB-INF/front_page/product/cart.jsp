@@ -25,7 +25,7 @@
 	</p>
 	<ul class="r uls">
 		<li class="dev">
-			您好,欢迎来到新巴巴运动网！
+			您好,欢迎来到莲花网！
 		</li>
 		<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
 		<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>

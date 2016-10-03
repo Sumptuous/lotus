@@ -32,7 +32,7 @@
 <div class="sign">
 	<div class="l ad420x205"><a href="#" title="title"><img src="/res/img/pic/ppp0.jpg" width="400" height="400"/></a></div>
 	<div class="r">
-		<h2 title="登录新巴巴运动网">登录莲花网</h2>
+		<h2 title="登录莲花网">登录莲花网</h2>
 		<form id="jvForm" action="/shopping/login.shtml" method="post">
 			<input type="hidden" name="returnUrl" value="${param.returnUrl}"/>
 			<ul class="uls form">

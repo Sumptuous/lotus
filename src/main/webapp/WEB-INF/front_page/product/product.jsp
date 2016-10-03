@@ -336,7 +336,7 @@ function login(){
 								<!-- dt 25个文字+... -->
 								<dd class="h40">${entry.name }</dd>
 								<dd class="orange">￥128.00</dd>
-								<dd>北京有货</dd>
+								<dd>上海有货</dd>
 								<dd><a href="#" title="加入购物车" class="inb btn70x21 mr">加入购物车</a></dd>
 							</dl>
 							<img src="/res/img/pic/hot.gif" alt="热门" class="type" />

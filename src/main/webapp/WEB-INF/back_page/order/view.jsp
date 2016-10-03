@@ -23,7 +23,7 @@
 					</tr>
 					<tr>
 						<td width="12%" class="pn-flabel pn-flabel-h">所在地区:</td>
-						<td width="38%" colspan="1" class="pn-fcontent">北京市北京市通州区</td>
+						<td width="38%" colspan="1" class="pn-fcontent">上海市上海市通州区</td>
 						<td width="12%" class="pn-flabel pn-flabel-h">地址:</td>
 						<td width="38%" colspan="1" class="pn-fcontent">建材城西路中腾建华3楼314室</td>
 					</tr>
