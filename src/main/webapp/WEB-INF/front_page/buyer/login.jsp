@@ -34,7 +34,7 @@
 	<div class="r">
 		<h2 title="登录新巴巴运动网">登录莲花网</h2>
 		<form id="jvForm" action="/shopping/login.shtml" method="post">
-			<input type="hidden" name="returnUrl" value="${param.directUrl}"/>
+			<input type="hidden" name="returnUrl" value="${param.returnUrl}"/>
 			<ul class="uls form">
 				<li id="errorName" class="errorTip" <c:if test="${empty error}">style="display:none"</c:if>>${error}</li>
 				<li><label for="username">用户名：</label>

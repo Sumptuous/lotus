@@ -17,7 +17,7 @@
 <script type="text/javascript">
 //登陆
 function login(){
-	window.location.href = "/shopping/login.shtml?returnUrl" + window.location.href;
+	window.location.href = "/shopping/login.shtml?returnUrl=" + window.location.href;
 }
 </script>
 </head>
@@ -29,13 +29,17 @@ function login(){
 		</span>
 	</p>
 	<ul class="r uls">
-	<li class="dev">您好,欢迎来到莲花网！</li>
-	<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
-	<li class="dev"><a href="javascript:void(0)" onclick="myOrder()" title="我的订单">我的订单</a></li>
-	<li class="dev"><a href="#" title="在线客服">在线客服</a></li>
-	<li class="dev after"><a href="#" title="English">English</a></li>
+		<li class="dev">您好,欢迎来到莲花网！</li>
+		<c:if test="${!isLogin}">
+		<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
+		</c:if>
+		<c:if test="${isLogin}">
+		<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
+	    <li class="dev"><a href="javascript:void(0)" onclick="myOrder()" title="我的订单">我的订单</a></li>
+		</c:if>
+		<li class="dev"><a href="#" title="在线客服">在线客服</a></li>
+		<li class="dev after"><a href="#" title="English">English</a></li>
 	</ul>
 </div></div>
 <div class="w loc">

@@ -72,6 +72,8 @@ public class Sku implements Serializable {
     /**添加颜色对象*/
     private Color color;
 
+    private Product product;
+
     public Integer getId() {
         return id;
     }
@@ -240,6 +242,14 @@ public class Sku implements Serializable {
         this.color = color;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
         return "Sku{" +
@@ -264,6 +274,7 @@ public class Sku implements Serializable {
                 ", skuType=" + skuType +
                 ", sales=" + sales +
                 ", color=" + color +
+                ", product=" + product +
                 '}';
     }
 }

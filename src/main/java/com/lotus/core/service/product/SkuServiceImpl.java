@@ -1,6 +1,7 @@
 package com.lotus.core.service.product;
 
 import com.lotus.common.page.Pagination;
+import com.lotus.core.bean.product.Product;
 import com.lotus.core.bean.product.Sku;
 import com.lotus.core.dao.product.SkuMapper;
 import com.lotus.core.query.product.SkuQuery;
@@ -18,9 +19,11 @@ import java.util.List;
 public class SkuServiceImpl implements SkuService{
 
     @Resource
-    SkuMapper skuMapper;
+    private SkuMapper skuMapper;
     @Resource
-    ColorService colorService;
+    private ColorService colorService;
+    @Resource
+    private ProductService productService;
 
     /**
      * 插入数据库
@@ -36,6 +39,14 @@ public class SkuServiceImpl implements SkuService{
      */
     @Transactional(readOnly = true)
     public Sku getSkuByKey(Integer id) {
+        Sku sku = skuMapper.getSkuByKey(id);
+
+        //通过商品ID
+        Product product = productService.getProductByKey(sku.getProductId());
+
+        sku.setProduct(product);
+        //颜色加载
+        sku.setColor(colorService.getColorByKey(sku.getColorId()));
         return skuMapper.getSkuByKey(id);
     }
 
