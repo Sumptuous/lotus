@@ -12,6 +12,10 @@
 
 	<!-- Session实例化 -->
 	<bean id="sessionProvider" class="com.lotus.common.web.session.HttpSessionProvider"/>
+	<!--<bean id="sessionProvider" class="cn.itcast.common.web.session.CacheSessionProvider">-->
+		<!--<property name="expiry" value="60"/>-->
+	<!--</bean>-->
+
 	<!-- Md5加密 -->
 	<bean id="md5Pwd" class="com.lotus.common.encode.Md5PwdImpl"/>
 	
