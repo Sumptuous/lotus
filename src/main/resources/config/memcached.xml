@@ -43,11 +43,11 @@
 		<!-- 面 -->
 		<aop:aspect ref="cacheInterceptor">
 			<!-- 点 -->
-			<aop:around method="doAround" pointcut="execution(* cn.itcast.core.service.*.*.get*(..))"/>
+			<aop:around method="doAround" pointcut="execution(* com.lotus.core.service.*.*.get*(..))"/>
 			<!-- 变更  -->
-			<aop:after method="doAfter" pointcut="execution(* cn.itcast.core.service.*.*.update*(..))"/>
-			<aop:after method="doAfter" pointcut="execution(* cn.itcast.core.service.*.*.add*(..))"/>
-			<aop:after method="doAfter" pointcut="execution(* cn.itcast.core.service.*.*.delete*(..))"/>
+			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.update*(..))"/>
+			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.add*(..))"/>
+			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.delete*(..))"/>
 		</aop:aspect>
 	</aop:config>
 	
