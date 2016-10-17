@@ -52,6 +52,10 @@
                         <input name="conPassword" type="password" id="conPassword" maxlength="32">
                     </span>
                 </li>
+                <li><label for="email">邮 箱：</label>
+				<span class="bg_text">
+					<input type="text" id="email" name="email" maxLength="100" />
+				</span>
                 <li><label for="captcha">验证码：</label>
 				<span class="bg_text small">
 					<input type="text" id="captcha" name="captcha" maxLength="7"/>

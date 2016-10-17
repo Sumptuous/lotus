@@ -2,6 +2,8 @@ package com.lotus.core.service.user;
 
 import com.lotus.common.email.EmailService;
 import com.lotus.common.encode.Md5Pwd;
+import com.lotus.common.exception.BaseException;
+import com.lotus.common.exception.ErrorCode;
 import com.lotus.common.web.session.SessionProvider;
 import com.lotus.core.bean.country.City;
 import com.lotus.core.bean.country.Province;
@@ -53,87 +55,87 @@ public class ProfileServiceImpl implements ProfileService {
     private String emailCreateAccount;
 
     public String signup(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        if(imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request,response), captcha)){
-            if (StringUtils.isNotBlank(buyer.getPassword()) && StringUtils.isNotBlank(conPassword)){
-                if (StringUtils.isNotBlank(buyer.getUsername())){
-                    if (conPassword.equals(buyer.getPassword())){
-                        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
-                        if (b == null){
-                            b = new Buyer();
-                            String password = md5Pwd.encode(buyer.getPassword());
-                            b.setUsername(buyer.getUsername());
-                            b.setPassword(password);
-                            buyerService.addBuyer(b);
 
-                            Thread thread = new Thread() {
-                                @Override
-                                public void run() {
-                                    HashMap<String, Object> content = new HashMap<String, Object>();
-                                    content.put("username", buyer.getUsername());
-                                    emailService.sendEmail(buyer.getEmail(), "ganwu13@163.com", emailCreateAccount, "createAccount", content);
-
-                                }
-                            };
-                            thread.start();
-
-                            return "redirect:/shopping/login.shtml";
-                        }else {
-                            model.addAttribute("error", "该用户已存在");
-                        }
-                    }else {
-                        model.addAttribute("error", "两次填写的密码不匹配");
-                    }
-                }else {
-                    model.addAttribute("error", "请填写用户名");
-                }
-            }else {
-                model.addAttribute("error", "请填写密码");
-            }
-        }else {
-            model.addAttribute("error", "请填写验证码");
+        if (!StringUtils.isNotBlank(buyer.getUsername())) {
+            throw new BaseException(ErrorCode.PLEASE_INPUT_USERNAME);
         }
-        return "buyer/signup";
+        if(StringUtils.isNotBlank(captcha)){
+            throw new BaseException(ErrorCode.PLEASE_INPUT_VERIFICATION_CODE);
+        }
+        if (!StringUtils.isNotBlank(buyer.getPassword()) && !StringUtils.isNotBlank(conPassword)) {
+            throw new BaseException(ErrorCode.PLEASE_INPUT_PASSWORD);
+        }
+        if (!imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request, response), captcha)) {
+            throw new BaseException(ErrorCode.INCORRECT_VERIFICATION_CODE);
+        }
+        if (!conPassword.equals(buyer.getPassword())) {
+            throw new BaseException(ErrorCode.PASSWORD_NOT_MATCH);
+        }
+        if (buyer.getUsername().matches("^[a-zA-Z\\d_\\.]+$") || buyer.getUsername().length()>6 || buyer.getUsername().length()<16){
+            throw new BaseException(ErrorCode.USERNAME_NOT_VALID);
+        }
+
+        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+        //判断用户存不存在
+        if (b != null){
+            throw new BaseException(ErrorCode.USERNAME_ALREADY_EXIST);
+        }
+
+        b = new Buyer();
+        String password = md5Pwd.encode(buyer.getPassword());
+        b.setUsername(buyer.getUsername());
+        b.setPassword(password);
+        buyerService.addBuyer(b);
+
+        //给用户发送邮件
+        if (!StringUtils.isNotBlank(buyer.getEmail())) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    HashMap<String, Object> content = new HashMap<String, Object>();
+                    content.put("username", buyer.getUsername());
+                    emailService.sendEmail(buyer.getEmail(), "ganwu13@163.com", emailCreateAccount, "createAccount", content);
+                }
+            };
+            thread.start();
+        }
+        return "redirect:/shopping/login.shtml";
     }
 
     public String login(Buyer buyer, String captcha, String returnUrl, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        //验证码是否为null
-        if(StringUtils.isNotBlank(captcha)){
-            //1:JSESSIONID
-            //2验证码
-            if(imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request,response), captcha)){
-                if(null != buyer && StringUtils.isNotBlank(buyer.getUsername())){
-                    if(StringUtils.isNotBlank(buyer.getPassword())){
-                        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
-                        if(null != b){
-                            //
-                            if(b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
-                                //把用户对象放在Session
-                                sessionProvider.setAttribute(request,response, Constants.BUYER_SESSION, b);
-                                if(StringUtils.isNotBlank(returnUrl)){
-                                    return "redirect:" + returnUrl;
-                                }else{
-                                    //个人中心
-                                    return "redirect:/buyer/index.shtml" ;
-                                }
-                            }else{
-                                model.addAttribute("error", "密码错误");
-                            }
-                        }else{
-                            model.addAttribute("error", "用户名输入错误");
-                        }
-                    }else{
-                        model.addAttribute("error", "请输入密码");
-                    }
-                }else{
-                    model.addAttribute("error", "请输入用户名");
-                }
-            }else{
-                model.addAttribute("error", "验证码输入错误");
-            }
-        }else{
-            model.addAttribute("error", "请填写验证码");
+        if (!StringUtils.isNotBlank(buyer.getUsername())) {
+            throw new BaseException(ErrorCode.PLEASE_INPUT_USERNAME);
         }
-        return "buyer/login";
+        if(StringUtils.isNotBlank(captcha)){
+            throw new BaseException(ErrorCode.PLEASE_INPUT_VERIFICATION_CODE);
+        }
+        if (!StringUtils.isNotBlank(buyer.getPassword())) {
+            throw new BaseException(ErrorCode.PLEASE_INPUT_PASSWORD);
+        }
+        if (!imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request, response), captcha)) {
+            throw new BaseException(ErrorCode.INCORRECT_VERIFICATION_CODE);
+        }
+        if (buyer.getPassword().matches("[a-zA-Z\\d\\.]+") || buyer.getPassword().length()>6 || buyer.getPassword().length()<16){
+            throw new BaseException(ErrorCode.PASSWORD_NOT_VALID);
+        }
+
+        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+        //判断用户存不存在
+        if (b == null){
+            throw new BaseException(ErrorCode.USERNAME_NOT_EXIST);
+        }
+        if(b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
+            throw new BaseException(ErrorCode.INCORRECT_PASSWORD);
+        }
+
+        //把用户对象放在Session
+        sessionProvider.setAttribute(request,response, Constants.BUYER_SESSION, b);
+        if(StringUtils.isNotBlank(returnUrl)){
+            return "redirect:" + returnUrl;
+        }else{
+            //个人中心
+            return "redirect:/buyer/index.shtml" ;
+        }
     }
 
     public String profile(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
@@ -156,5 +158,13 @@ public class ProfileServiceImpl implements ProfileService {
         model.addAttribute("towns", towns);
 
         return "buyer/profile";
+    }
+
+    private void checkParam(String param, ModelMap model){
+        if (param.matches("^[a-zA-Z\\d_\\.]+$")){
+
+        }else {
+            model.addAttribute("error", "");
+        }
     }
 }
