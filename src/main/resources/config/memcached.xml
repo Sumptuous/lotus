@@ -23,7 +23,7 @@
 		</constructor-arg>
 		<property name="servers">
 			<list>
-				<value>192.168.200.149:11211</value>
+				<value>127.0.0.1:1873</value>
 			</list>
 		</property>
 		<property name="weights">
@@ -39,16 +39,16 @@
 	</bean>
 	
 	<!-- Spring  Aop 配置   get* 配置环绕 -->
-	<aop:config>
-		<!-- 面 -->
-		<aop:aspect ref="cacheInterceptor">
-			<!-- 点 -->
-			<aop:around method="doAround" pointcut="execution(* com.lotus.core.service.*.*.get*(..))"/>
-			<!-- 变更  -->
-			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.update*(..))"/>
-			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.add*(..))"/>
-			<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.delete*(..))"/>
-		</aop:aspect>
-	</aop:config>
+	<!--<aop:config>-->
+		<!--&lt;!&ndash; 面 &ndash;&gt;-->
+		<!--<aop:aspect ref="cacheInterceptor">-->
+			<!--&lt;!&ndash; 点 &ndash;&gt;-->
+			<!--<aop:around method="doAround" pointcut="execution(* com.lotus.core.service.*.*.get*(..))"/>-->
+			<!--&lt;!&ndash; 变更  &ndash;&gt;-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.update*(..))"/>-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.add*(..))"/>-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.delete*(..))"/>-->
+		<!--</aop:aspect>-->
+	<!--</aop:config>-->
 	
 </beans>

@@ -1,0 +1,160 @@
+package com.lotus.core.service.user;
+
+import com.lotus.common.email.EmailService;
+import com.lotus.common.encode.Md5Pwd;
+import com.lotus.common.web.session.SessionProvider;
+import com.lotus.core.bean.country.City;
+import com.lotus.core.bean.country.Province;
+import com.lotus.core.bean.country.Town;
+import com.lotus.core.bean.user.Buyer;
+import com.lotus.core.query.country.CityQuery;
+import com.lotus.core.query.country.TownQuery;
+import com.lotus.core.service.country.CityService;
+import com.lotus.core.service.country.ProvinceService;
+import com.lotus.core.service.country.TownService;
+import com.lotus.core.web.Constants;
+import com.octo.captcha.service.image.ImageCaptchaService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * @author wyy
+ */
+
+@Service
+public class ProfileServiceImpl implements ProfileService {
+
+    @Autowired
+    private SessionProvider sessionProvider;
+    @Autowired
+    private Md5Pwd md5Pwd;
+    @Autowired
+    private BuyerService buyerService;
+    @Autowired
+    private ImageCaptchaService imageCaptchaService;
+    @Autowired
+    private ProvinceService provinceService;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private TownService townService;
+    @Resource
+    private EmailService emailService;
+    @Value("${email.createAccount}")
+    private String emailCreateAccount;
+
+    public String signup(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        if(imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request,response), captcha)){
+            if (StringUtils.isNotBlank(buyer.getPassword()) && StringUtils.isNotBlank(conPassword)){
+                if (StringUtils.isNotBlank(buyer.getUsername())){
+                    if (conPassword.equals(buyer.getPassword())){
+                        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+                        if (b == null){
+                            b = new Buyer();
+                            String password = md5Pwd.encode(buyer.getPassword());
+                            b.setUsername(buyer.getUsername());
+                            b.setPassword(password);
+                            buyerService.addBuyer(b);
+
+                            Thread thread = new Thread() {
+                                @Override
+                                public void run() {
+                                    HashMap<String, Object> content = new HashMap<String, Object>();
+                                    content.put("username", buyer.getUsername());
+                                    emailService.sendEmail(buyer.getEmail(), "ganwu13@163.com", emailCreateAccount, "createAccount", content);
+
+                                }
+                            };
+                            thread.start();
+
+                            return "redirect:/shopping/login.shtml";
+                        }else {
+                            model.addAttribute("error", "该用户已存在");
+                        }
+                    }else {
+                        model.addAttribute("error", "两次填写的密码不匹配");
+                    }
+                }else {
+                    model.addAttribute("error", "请填写用户名");
+                }
+            }else {
+                model.addAttribute("error", "请填写密码");
+            }
+        }else {
+            model.addAttribute("error", "请填写验证码");
+        }
+        return "buyer/signup";
+    }
+
+    public String login(Buyer buyer, String captcha, String returnUrl, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        //验证码是否为null
+        if(StringUtils.isNotBlank(captcha)){
+            //1:JSESSIONID
+            //2验证码
+            if(imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request,response), captcha)){
+                if(null != buyer && StringUtils.isNotBlank(buyer.getUsername())){
+                    if(StringUtils.isNotBlank(buyer.getPassword())){
+                        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+                        if(null != b){
+                            //
+                            if(b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
+                                //把用户对象放在Session
+                                sessionProvider.setAttribute(request,response, Constants.BUYER_SESSION, b);
+                                if(StringUtils.isNotBlank(returnUrl)){
+                                    return "redirect:" + returnUrl;
+                                }else{
+                                    //个人中心
+                                    return "redirect:/buyer/index.shtml" ;
+                                }
+                            }else{
+                                model.addAttribute("error", "密码错误");
+                            }
+                        }else{
+                            model.addAttribute("error", "用户名输入错误");
+                        }
+                    }else{
+                        model.addAttribute("error", "请输入密码");
+                    }
+                }else{
+                    model.addAttribute("error", "请输入用户名");
+                }
+            }else{
+                model.addAttribute("error", "验证码输入错误");
+            }
+        }else{
+            model.addAttribute("error", "请填写验证码");
+        }
+        return "buyer/login";
+    }
+
+    public String profile(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+        //加载用户
+        Buyer buyer = (Buyer) sessionProvider.getAttribute(request,response, Constants.BUYER_SESSION);
+        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+        model.addAttribute("buyer", b);
+        //省
+        List<Province> provinces = provinceService.getProvinceList(null);
+        model.addAttribute("provinces", provinces);
+        //市
+        CityQuery cityQuery = new CityQuery();
+        cityQuery.setProvince(b.getProvince());
+        List<City> citys = cityService.getCityList(cityQuery);
+        model.addAttribute("citys", citys);
+        //县
+        TownQuery townQuery = new TownQuery();
+        townQuery.setCity(b.getCity());
+        List<Town> towns = townService.getTownList(townQuery);
+        model.addAttribute("towns", towns);
+
+        return "buyer/profile";
+    }
+}

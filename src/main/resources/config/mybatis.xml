@@ -13,7 +13,7 @@
 	<!-- c3p0-->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${driverClass}"/>
-		<property name="jdbcUrl" value="${jdbcUrl}"></property>
+		<property name="jdbcUrl" value="${jdbcUrl}" />
 		<property name="user" value="${user}" />
 		<property name="password" value="${password}"/>
 	</bean>

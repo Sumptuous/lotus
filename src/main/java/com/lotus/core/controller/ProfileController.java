@@ -1,5 +1,6 @@
 package com.lotus.core.controller;
 
+import com.lotus.common.email.EmailService;
 import com.lotus.common.encode.Md5Pwd;
 import com.lotus.common.web.ResponseUtils;
 import com.lotus.common.web.session.SessionProvider;
@@ -13,18 +14,22 @@ import com.lotus.core.service.country.CityService;
 import com.lotus.core.service.country.ProvinceService;
 import com.lotus.core.service.country.TownService;
 import com.lotus.core.service.user.BuyerService;
+import com.lotus.core.service.user.ProfileService;
 import com.lotus.core.web.Constants;
 import com.octo.captcha.service.image.ImageCaptchaService;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,96 +57,78 @@ public class ProfileController {
 	private CityService cityService;
 	@Autowired
 	private TownService townService;
+	@Resource
+	private ProfileService profileService;
 
-	//GET
+	/**
+	 * 跳转到注册页
+	 * @return
+     */
+	@RequestMapping(value = "/shopping/signup.shtml", method = RequestMethod.GET)
+	public String signup(){
+		return "buyer/signup";
+	}
+
+	/**
+	 * 用户注册
+	 * @param buyer
+	 * @param conPassword
+	 * @param captcha
+	 * @param model
+	 * @param request
+	 * @param response
+     * @return
+     */
+	@RequestMapping(value = "/shopping/signup.shtml", method = RequestMethod.POST)
+	public String signup(Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		return profileService.signup(buyer, conPassword, captcha, model, request, response);
+	}
+
+	/**
+	 * 跳转到登录页
+	 * @return
+     */
 	@RequestMapping(value = "/shopping/login.shtml",method=RequestMethod.GET)
 	public String login(){
 		return "buyer/login";
 	}
-	//POST
+
 	/**
-	 * 1:验证码是否为null
-		2:验证码  是否正确
-		3:用户是否为NUll
-		4:密码是否为NUll
-		5:用户是否正确
-		6密码是否正确
-		放进Session   跳转ReturnUrl
+	 * 用户登录
 	 * @param buyer
 	 * @param captcha
 	 * @param returnUrl
-	 * @return
-	 */
+	 * @param model
+	 * @param request
+	 * @param response
+     * @return
+     */
 	@RequestMapping(value = "/shopping/login.shtml",method=RequestMethod.POST)
 	public String login(Buyer buyer, String captcha, String returnUrl, ModelMap model, HttpServletRequest request, HttpServletResponse response){
-		//验证码是否为null
-		if(StringUtils.isNotBlank(captcha)){
-			//1:JSESSIONID
-			//2验证码
-			if(imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request,response), captcha)){
-				if(null != buyer && StringUtils.isNotBlank(buyer.getUsername())){
-					if(StringUtils.isNotBlank(buyer.getPassword())){
-						Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
-						if(null != b){
-							//
-							if(b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
-								//把用户对象放在Session
-								sessionProvider.setAttribute(request,response, Constants.BUYER_SESSION, b);
-								if(StringUtils.isNotBlank(returnUrl)){
-									return "redirect:" + returnUrl;
-								}else{
-									//个人中心
-									return "redirect:/buyer/index.shtml" ;
-								}
-							}else{
-								model.addAttribute("error", "密码错误");
-							}
-						}else{
-							model.addAttribute("error", "用户名输入错误");
-						}
-					}else{
-						model.addAttribute("error", "请输入密码");
-					}
-				}else{
-					model.addAttribute("error", "请输入用户名");
-				}
-			}else{
-				model.addAttribute("error", "验证码输入错误");
-			}
-		}else{
-			model.addAttribute("error", "请填写验证码");
-		}
-		return "buyer/login";
+		return profileService.login(buyer, captcha, returnUrl, model, request, response);
 	}
-	//个人中心
+
+	/**
+	 * 个人中心
+	 * @return
+     */
 	@RequestMapping(value = "/buyer/index.shtml")
 	public String index(){
 		return "buyer/index";
 	}
-	//个人资料
+
+	/**
+	 * 个人资料
+	 * @param request
+	 * @param model
+	 * @param response
+     * @return
+     */
 	@RequestMapping(value = "/buyer/profile.shtml")
 	public String profile(HttpServletRequest request,ModelMap model,HttpServletResponse response){
-		//加载用户
-		Buyer buyer = (Buyer) sessionProvider.getAttribute(request,response, Constants.BUYER_SESSION);
-		Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
-		model.addAttribute("buyer", b);
-		//省
-		List<Province> provinces = provinceService.getProvinceList(null);
-		model.addAttribute("provinces", provinces);
-		//市 
-		CityQuery cityQuery = new CityQuery();
-		cityQuery.setProvince(b.getProvince());
-		List<City> citys = cityService.getCityList(cityQuery);
-		model.addAttribute("citys", citys);
-		//县
-		TownQuery townQuery = new TownQuery();
-		townQuery.setCity(b.getCity());
-		List<Town> towns = townService.getTownList(townQuery);
-		model.addAttribute("towns", towns);
-		
-		return "buyer/profile";
+		return profileService.profile(request, model, response);
 	}
-	//
+
 	@RequestMapping(value = "/buyer/city.shtml")
 	public void city(String code,HttpServletResponse response){
 		CityQuery cityQuery = new CityQuery();
@@ -153,7 +140,11 @@ public class ProfileController {
 		ResponseUtils.renderJson(response, jo.toString());
 		
 	}
-	//收货地址
+
+	/**
+	 * 收货地址
+	 * @return
+     */
 	@RequestMapping(value = "/buyer/deliver_address.shtml")
 	public String address(){
 		

@@ -16,7 +16,8 @@
 			<list>
 				<!-- jdbc配置 -->
 				<value>classpath:properties/jdbc.properties</value>
-				<!-- memcached配置 -->
+				<!-- email -->
+				<value>classpath:properties/config.properties</value>
 			</list>
 		</property>
 	</bean>

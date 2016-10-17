@@ -25,6 +25,6 @@ public class TestTestTb extends SpringJunitTest {
 		TestTb testTb = new TestTb();
 		testTb.setName("金乐乐");
 		
-		testTbService.addTestTb(testTb);
+		//testTbService.addTestTb(testTb);
 	}
 }

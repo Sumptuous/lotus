@@ -222,6 +222,10 @@ ul.form label{float:left;display:block;padding-top:4px;text-align:right;color:#6
 ul.form span{float:left}
 ul.form .bg_text{position:relative;width:190px;height:26px;margin-right:4px;background:url("../img/gray/bg_text.gif") no-repeat}
 ul.form .bg_text input{width:184px;height:20px;height:16px !important;padding:6px 0 0 6px;border:0;background-color:transparent}
+.pwd_signup li{position:relative;z-index:10008;float:left;margin-top: 60px}
+ul .pwd{margin-left: 10px}
+ul .signup{margin-left: 100px}
+ul.form .bg_submit{margin-left: 60px;padding:40px 0 0 0;border:0;background-color:transparent}
 ul.form .bg_text .def{position:absolute;top:0;left:0;width:184px;height:20px;padding:6px 0 0 6px}
 ul.form .small{width:112px;background-position:0 -26px}
 ul.form .small input{width:106px}

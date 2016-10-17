@@ -1,0 +1,38 @@
+<style type="text/css">
+    a, a:hover, a:visited{
+        color:#1A71C0;
+        text-decoration: underline;
+    }
+</style>
+<table border="0">
+        <tr>
+            <td style="font-size:14px;text-align: left;">尊敬的$map.get("username")，您好！ </td>
+        </tr>
+        <tr>
+            <td style="font-size:12px;text-align: left; text-indent: 2em;">
+                您的$map.get("lotusSystemChineseName")帐号$map.get("username") 已于$map.get("date")开通，请点击下面的链接访问：<br/>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:12px;text-align: left; text-indent: 2em;">
+                （如果您无法点击这个链接，请将此链接复制到浏览器地址栏后访问）
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:12px;text-align: left; text-indent: 2em;">
+                若您担心帐号安全，建议您立即登录，修改密码。
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:12px;text-align: left; text-indent: 2em;">
+                感謝您使用$map.get("lotusSystemChineseName")电商管理系統
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">$map.get("date")</td>
+        </tr>
+        <tr>
+            <td style="font-size:14px;text-align: left;">此邮件为自动回复发送，请勿回复！ </td>
+        </tr>
+</table>
+

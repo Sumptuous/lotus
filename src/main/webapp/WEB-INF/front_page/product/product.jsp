@@ -32,7 +32,7 @@ function login(){
 		<li class="dev">您好,欢迎来到莲花网！</li>
 		<c:if test="${!isLogin}">
 		<li class="dev"><a href="javascript:void(0)" onclick="login()"  title="登陆">[登陆]</a></li>
-		<li class="dev"><a href="javascript:void(0)" onclick="register()" title="免费注册">[免费注册]</a></li>
+		<li class="dev"><a href="javascript:void(0)" onclick="window.open('/shopping/signup.shtml')" title="免费注册">[免费注册]</a></li>
 		</c:if>
 		<c:if test="${isLogin}">
 		<li class="dev"><a href="javascript:void(0)" onclick="logout()" title="退出">[退出]</a></li>
