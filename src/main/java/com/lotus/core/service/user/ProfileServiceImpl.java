@@ -59,7 +59,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (!StringUtils.isNotBlank(buyer.getUsername())) {
             throw new BaseException(ErrorCode.PLEASE_INPUT_USERNAME);
         }
-        if(StringUtils.isNotBlank(captcha)){
+        if(!StringUtils.isNotBlank(captcha)){
             throw new BaseException(ErrorCode.PLEASE_INPUT_VERIFICATION_CODE);
         }
         if (!StringUtils.isNotBlank(buyer.getPassword()) && !StringUtils.isNotBlank(conPassword)) {
@@ -106,7 +106,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (!StringUtils.isNotBlank(buyer.getUsername())) {
             throw new BaseException(ErrorCode.PLEASE_INPUT_USERNAME);
         }
-        if(StringUtils.isNotBlank(captcha)){
+        if(!StringUtils.isNotBlank(captcha)){
             throw new BaseException(ErrorCode.PLEASE_INPUT_VERIFICATION_CODE);
         }
         if (!StringUtils.isNotBlank(buyer.getPassword())) {

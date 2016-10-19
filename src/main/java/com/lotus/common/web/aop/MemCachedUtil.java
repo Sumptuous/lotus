@@ -1,4 +1,4 @@
-package com.lotus.common.web;
+package com.lotus.common.web.aop;
 
 import com.danga.MemCached.MemCachedClient;
 import org.apache.log4j.Logger;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class MemCachedUtil {
-    private static final Logger logger = Logger.getLogger(cn.itcast.common.web.aop.MemCachedUtil.class);
+    private static final Logger logger = Logger.getLogger(com.lotus.common.web.aop.MemCachedUtil.class);
 
     public MemCachedUtil() {
     }

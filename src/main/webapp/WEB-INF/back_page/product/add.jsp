@@ -20,7 +20,7 @@
 			font-size: 14px;
 			font-weight: normal;
 			border: 1px solid #C5C5C5;
-			background: url('/res/itcast/img/admin/bg_ch.gif') repeat-x scroll 0% 0% transparent;
+			background: url('/res/lotus/img/admin/bg_ch.gif') repeat-x scroll 0% 0% transparent;
 		}
 		a {
 			color: #06C;

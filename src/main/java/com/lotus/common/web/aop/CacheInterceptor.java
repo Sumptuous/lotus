@@ -1,7 +1,6 @@
 package com.lotus.common.web.aop;
 
 import com.danga.MemCached.MemCachedClient;
-import com.lotus.common.web.MemCachedUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -72,7 +71,7 @@ public class CacheInterceptor {
     public String getCacheKey(ProceedingJoinPoint pjp){
         //StringBuiter
         StringBuilder key = new StringBuilder();
-        //包名+ 类名   cn.itcast.core.serice.product.ProductServiceImpl.productList
+        //包名+ 类名   com.lotus.core.serice.product.ProductServiceImpl.productList
         String packageName = pjp.getTarget().getClass().getName();
         key.append(packageName);
         // 方法名

@@ -88,4 +88,11 @@
     <url-pattern>/captcha.svl</url-pattern>
   </servlet-mapping>
 
+  <!-- 错误跳转页面 -->
+  <error-page>
+    <!-- 路径不正确 -->
+    <error-code>404</error-code>
+    <location>/WEB-INF/exception/404.jsp</location>
+  </error-page>
+
 </web-app>

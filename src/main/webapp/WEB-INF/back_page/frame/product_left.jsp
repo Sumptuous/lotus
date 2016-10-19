@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>product-left</title>
-<link href="/res/itcast/css/admin.css" rel="stylesheet" type="text/css"/>
+<link href="/res/lotus/css/admin.css" rel="stylesheet" type="text/css"/>
 <link href="/res/common/css/theme.css" rel="stylesheet" type="text/css"/>
 <link href="/res/common/css/jquery.validate.css" rel="stylesheet" type="text/css"/>
 <link href="/res/common/css/jquery.treeview.css" rel="stylesheet" type="text/css"/>
@@ -16,8 +16,8 @@
 <script src="/res/common/js/jquery.js" type="text/javascript"></script>
 <script src="/res/common/js/jquery.ext.js" type="text/javascript"></script>
 <script src="/res/common/js/jquery.form.js" type="text/javascript"></script>
-<script src="/res/common/js/itcast.js" type="text/javascript"></script>
-<script src="/res/itcast/js/admin.js" type="text/javascript"></script>
+<script src="/res/common/js/lotus.js" type="text/javascript"></script>
+<script src="/res/lotus/js/admin.js" type="text/javascript"></script>
 </head>
 <body class="lbody">
 <div class="left">

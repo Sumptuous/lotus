@@ -12,6 +12,6 @@
 
     <!-- 别名配置
     <typeAliases>
-        <typeAlias type="cn.itcast.core.bean.user.Addr" alias="Addr"/>
+        <typeAlias type="com.lotus.core.bean.user.Addr" alias="Addr"/>
     </typeAliases> -->
 </configuration>
