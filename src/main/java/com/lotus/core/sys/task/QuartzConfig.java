@@ -48,12 +48,6 @@ public class QuartzConfig {
     private Map<String,CronTriggerFactoryBean> cronTriggerFactoryBeanMap=new HashMap<String,CronTriggerFactoryBean>();
 
 
-    private String myTestJobName= "MyTestJobName";
-    private String myTestJobGroup= "MyTestJobGroup";
-    private String myTestschedulerName="MyTestScheduler";
-    /**
-     * 每隔一个小时整点执行一次
-     */
     String [] cronExpression={"0 0 * * * ?","0 15 * * * ?","0 30 * * * ?","0 45 * * * ?"};
     @Bean
     public SchedulerFactoryBean quartzScheduler() {
@@ -72,7 +66,7 @@ public class QuartzConfig {
                 processMyJobTrigger().getObject()
         };
 
-        quartzScheduler.setTriggers(triggers);
+        //quartzScheduler.setTriggers(triggers);
 
         return quartzScheduler;
     }
@@ -81,7 +75,9 @@ public class QuartzConfig {
     public JobDetailFactoryBean processMyJob() {
         JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
         jobDetailFactory.setJobClass(MyJob.class);
+        String myTestJobName = "MyTestJobName";
         jobDetailFactory.setName(myTestJobName);
+        String myTestJobGroup = "MyTestJobGroup";
         jobDetailFactory.setGroup(myTestJobGroup);
         jobDetailFactory.setDurability(true);
         return jobDetailFactory;
