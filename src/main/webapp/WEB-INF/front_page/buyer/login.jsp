@@ -55,12 +55,12 @@
 				<li class="bg_submit"><label for="">&nbsp;</label><input type="submit" value="登 录" class="hand btn66x23"/></li>
 			</ul>
 		</form>
-		<ul class="uls pwd_signup">
+		<ul class="uls pwd_register">
 			<li class="pwd">
 				<a class="pwd" href="#" title="忘记密码？">忘记密码？</a>
 			</li>
-			<li class="signup">
-				<a class="signup" href="javascript:void(0);" onclick="window.open('/shopping/signup.shtml')">立即注册</a>
+			<li class="register">
+				<a class="register" href="javascript:void(0);" onclick="window.open('/shopping/register.shtml')">立即注册</a>
 			</li>
 		</ul>
 	</div>

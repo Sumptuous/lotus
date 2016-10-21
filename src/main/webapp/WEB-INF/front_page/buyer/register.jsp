@@ -33,7 +33,7 @@
     <div class="l ad420x205"><a href="#" title="title"><img src="/res/img/pic/banner-1.jpg" width="400" height="400"/></a></div>
     <div class="r">
         <h2 title="免费登录">免费注册</h2>
-        <form id="jvForm" action="/shopping/signup.shtml" method="post">
+        <form id="jvForm" action="/shopping/register.shtml" method="post">
             <ul class="uls form">
                 <li id="errorName" class="errorTip" <c:if test="${empty error}">style="display:none"</c:if>>${error}</li>
                 <li><label for="username">用户名：</label>

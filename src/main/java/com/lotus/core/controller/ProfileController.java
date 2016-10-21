@@ -64,9 +64,9 @@ public class ProfileController {
 	 * 跳转到注册页
 	 * @return
      */
-	@RequestMapping(value = "/shopping/signup.shtml", method = RequestMethod.GET)
-	public String signup(){
-		return "buyer/signup";
+	@RequestMapping(value = "/shopping/register.shtml", method = RequestMethod.GET)
+	public String register(){
+		return "buyer/register";
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class ProfileController {
 	 * @param response
      * @return
      */
-	@RequestMapping(value = "/shopping/signup.shtml", method = RequestMethod.POST)
-	public String signup(Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response){
-		return profileService.signup(buyer, conPassword, captcha, model, request, response);
+	@RequestMapping(value = "/shopping/register.shtml", method = RequestMethod.POST)
+	public String register(Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		return profileService.register(buyer, conPassword, captcha, model, request, response);
 	}
 
 	/**

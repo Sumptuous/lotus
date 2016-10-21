@@ -54,7 +54,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Value("${email.createAccount}")
     private String emailCreateAccount;
 
-    public String signup(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    public String register(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 
         if (!StringUtils.isNotBlank(buyer.getUsername())) {
             throw new BaseException(ErrorCode.PLEASE_INPUT_USERNAME);

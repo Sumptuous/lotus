@@ -21,7 +21,7 @@ public interface ProfileService {
      * @param response
      * @return
      */
-    String signup(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response);
+    String register(final Buyer buyer, String conPassword, String captcha, ModelMap model, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 用户登录
