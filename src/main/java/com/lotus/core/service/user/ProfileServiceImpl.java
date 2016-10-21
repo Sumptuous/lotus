@@ -145,20 +145,21 @@ public class ProfileServiceImpl implements ProfileService {
 
     public String profile(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
         //加载用户
-        Buyer buyer = (Buyer) sessionProvider.getAttribute(request,response, Constants.BUYER_SESSION);
-        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
-        model.addAttribute("buyer", b);
+//        Buyer buyer = (Buyer) sessionProvider.getAttribute(request,response, Constants.BUYER_SESSION);
+//        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+        CurrentBuyer currentBuyer = CurrentContext.get();
+        model.addAttribute("buyer", currentBuyer);
         //省
         List<Province> provinces = provinceService.getProvinceList(null);
         model.addAttribute("provinces", provinces);
         //市
         CityQuery cityQuery = new CityQuery();
-        cityQuery.setProvince(b.getProvince());
+        cityQuery.setProvince(currentBuyer.getProvince());
         List<City> citys = cityService.getCityList(cityQuery);
         model.addAttribute("citys", citys);
         //县
         TownQuery townQuery = new TownQuery();
-        townQuery.setCity(b.getCity());
+        townQuery.setCity(currentBuyer.getCity());
         List<Town> towns = townService.getTownList(townQuery);
         model.addAttribute("towns", towns);
 
@@ -167,6 +168,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     public String logout(HttpServletRequest request, HttpServletResponse response, String returnUrl) {
         sessionProvider.logout(request, response);
+        CurrentContext.remove();
         return "redirect:" + returnUrl;
     }
 
