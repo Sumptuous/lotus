@@ -47,8 +47,10 @@ public class QuartzConfig {
 
     private Map<String,CronTriggerFactoryBean> cronTriggerFactoryBeanMap=new HashMap<String,CronTriggerFactoryBean>();
 
-
-    String [] cronExpression={"0 0 * * * ?","0 15 * * * ?","0 30 * * * ?","0 45 * * * ?"};
+    /**
+     * 测试
+     * @return
+     */
     @Bean
     public SchedulerFactoryBean quartzScheduler() {
         SchedulerFactoryBean quartzScheduler = new SchedulerFactoryBean();
@@ -66,7 +68,7 @@ public class QuartzConfig {
                 processMyJobTrigger().getObject()
         };
 
-        //quartzScheduler.setTriggers(triggers);
+        quartzScheduler.setTriggers(triggers);
 
         return quartzScheduler;
     }
@@ -87,7 +89,8 @@ public class QuartzConfig {
     public CronTriggerFactoryBean processMyJobTrigger() {
         CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
         cronTriggerFactoryBean.setJobDetail(processMyJob().getObject());
-        cronTriggerFactoryBean.setCronExpression("0/5 * * * * ?");
+        //在整点和半点时每15秒触发 trigger
+        cronTriggerFactoryBean.setCronExpression("0/15 0/30 * * * ?");
         cronTriggerFactoryBean.setGroup("MyTestGroup");
         cronTriggerFactoryBean.setName("MyTestName");
         return cronTriggerFactoryBean;
@@ -181,7 +184,8 @@ public class QuartzConfig {
         GenericBeanDefinition beanDefinition2 = new GenericBeanDefinition();
         CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
         cronTriggerFactoryBean.setJobDetail(jobDetailFactory.getObject());
-        cronTriggerFactoryBean.setCronExpression("0 0/1 * * * ?");
+        //每小时触发 trigger
+        cronTriggerFactoryBean.setCronExpression("0 0 * * * ?");
         cronTriggerFactoryBean.setGroup(EnumJobName.JobNameOrder.getTriggerGroupName());
         cronTriggerFactoryBean.setName(EnumJobName.JobNameOrder.getTriggerNamePostfix());
         cronTriggerFactoryBean.afterPropertiesSet();

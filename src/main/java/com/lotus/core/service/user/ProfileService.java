@@ -43,4 +43,10 @@ public interface ProfileService {
      * @return
      */
     String profile(HttpServletRequest request,ModelMap model,HttpServletResponse response);
+
+    /**
+     * 退出
+     * @param returnUrl
+     */
+    String logout(HttpServletRequest request, HttpServletResponse response, String returnUrl);
 }

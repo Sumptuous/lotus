@@ -19,6 +19,10 @@
 function login(){
 	window.location.href = "/shopping/login.shtml?returnUrl=" + window.location.href;
 }
+
+function logout() {
+	window.location.href = "/shopping/logout.shtml?returnUrl=" + window.location.href;
+}
 </script>
 </head>
 <body>

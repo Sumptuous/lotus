@@ -4,6 +4,7 @@ import com.lotus.common.page.Pagination;
 import com.lotus.core.bean.user.Buyer;
 import com.lotus.core.dao.user.BuyerMapper;
 import com.lotus.core.query.user.BuyerQuery;
+import com.lotus.core.sys.model.CurrentBuyer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 
 	@Transactional(readOnly = true)
-	public Buyer getBuyerByKey(String id) {
+	public CurrentBuyer getBuyerByKey(String id) {
 		return buyerMapper.getBuyerByKey(id);
 	}
 	

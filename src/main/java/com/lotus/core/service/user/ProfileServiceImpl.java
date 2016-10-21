@@ -14,6 +14,8 @@ import com.lotus.core.query.country.TownQuery;
 import com.lotus.core.service.country.CityService;
 import com.lotus.core.service.country.ProvinceService;
 import com.lotus.core.service.country.TownService;
+import com.lotus.core.sys.CurrentContext;
+import com.lotus.core.sys.model.CurrentBuyer;
 import com.lotus.core.web.Constants;
 import com.octo.captcha.service.image.ImageCaptchaService;
 import org.apache.commons.lang3.StringUtils;
@@ -115,21 +117,24 @@ public class ProfileServiceImpl implements ProfileService {
         if (!imageCaptchaService.validateResponseForID(sessionProvider.getSessionId(request, response), captcha)) {
             throw new BaseException(ErrorCode.INCORRECT_VERIFICATION_CODE);
         }
-        if (buyer.getPassword().matches("[a-zA-Z\\d\\.]+") || buyer.getPassword().length()>6 || buyer.getPassword().length()<16){
-            throw new BaseException(ErrorCode.PASSWORD_NOT_VALID);
-        }
+//        if (buyer.getPassword().matches("[a-zA-Z\\d\\.]+") || buyer.getPassword().length()>6 || buyer.getPassword().length()<16){
+//            throw new BaseException(ErrorCode.PASSWORD_NOT_VALID);
+//        }
 
-        Buyer b = buyerService.getBuyerByKey(buyer.getUsername());
+        CurrentBuyer b = buyerService.getBuyerByKey(buyer.getUsername());
         //判断用户存不存在
         if (b == null){
             throw new BaseException(ErrorCode.USERNAME_NOT_EXIST);
         }
-        if(b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
+        if(!b.getPassword().equals(md5Pwd.encode(buyer.getPassword()))){
             throw new BaseException(ErrorCode.INCORRECT_PASSWORD);
         }
 
         //把用户对象放在Session
         sessionProvider.setAttribute(request,response, Constants.BUYER_SESSION, b);
+
+        //把用户对象放在线程变量中
+        CurrentContext.set(b);
         if(StringUtils.isNotBlank(returnUrl)){
             return "redirect:" + returnUrl;
         }else{
@@ -158,6 +163,11 @@ public class ProfileServiceImpl implements ProfileService {
         model.addAttribute("towns", towns);
 
         return "buyer/profile";
+    }
+
+    public String logout(HttpServletRequest request, HttpServletResponse response, String returnUrl) {
+        sessionProvider.logout(request, response);
+        return "redirect:" + returnUrl;
     }
 
     private void checkParam(String param, ModelMap model){

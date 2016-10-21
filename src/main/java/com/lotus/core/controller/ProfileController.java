@@ -109,6 +109,18 @@ public class ProfileController {
 	}
 
 	/**
+	 * 用户退出
+	 * @param request
+	 * @param response
+	 * @param returnUrl
+     * @return
+     */
+	@RequestMapping("/shopping/logout.shtml")
+	public String logout(HttpServletRequest request, HttpServletResponse response, String returnUrl){
+		return profileService.logout(request, response, returnUrl);
+	}
+
+	/**
 	 * 个人中心
 	 * @return
      */

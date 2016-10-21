@@ -3,6 +3,7 @@ package com.lotus.core.service.user;
 import com.lotus.common.page.Pagination;
 import com.lotus.core.bean.user.Buyer;
 import com.lotus.core.query.user.BuyerQuery;
+import com.lotus.core.sys.model.CurrentBuyer;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface BuyerService {
 	/**
 	 * 根据主键查询
 	 */
-	Buyer getBuyerByKey(String id);
+	CurrentBuyer getBuyerByKey(String id);
 
 	/**
 	 * 根据主键批量查询
