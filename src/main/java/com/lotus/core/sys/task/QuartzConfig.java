@@ -24,6 +24,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定时任务
  * @author wyy
  */
 @Configuration
@@ -136,7 +137,7 @@ public class QuartzConfig {
         jobFactory.setApplicationContext(applicationContext);
         quartzScheduler.setJobFactory(jobFactory);
 
-        //取消过期的订单
+        //取消过期未付款的订单
         List<CronTriggerFactoryBean> scoreJobCronTriggerFactoryBeans = cancelOrderJob();
 
         List<CronTriggerFactoryBean> allCronTriggerFactoryBean = new ArrayList<CronTriggerFactoryBean>();
@@ -161,7 +162,7 @@ public class QuartzConfig {
     }
 
     /**
-     * 取消过期的订单
+     * 取消过期未付款的订单
      */
     private List<CronTriggerFactoryBean> cancelOrderJob() {
         AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();

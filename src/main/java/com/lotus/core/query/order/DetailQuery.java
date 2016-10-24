@@ -10,8 +10,7 @@ import java.util.Map;
 
 /**
  * 订单详情对象
- * @author lixu
- * @Date [2014-3-28 下午05:58:00]
+ * @author wyy
  */
 public class DetailQuery extends BaseQuery {
 	/**

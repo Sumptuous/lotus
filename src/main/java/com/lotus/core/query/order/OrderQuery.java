@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 
- * @author lixu
- * @Date [2014-3-28 下午05:58:00]
+ * @author wyy
  */
 public class OrderQuery extends BaseQuery {
 	/**
@@ -93,12 +91,12 @@ public class OrderQuery extends BaseQuery {
 		this.isConfirm = isConfirm;
 		return this;
 	}
-	private Integer isPaiy;
-	public Integer getIsPaiy() {
-		return isPaiy;
+	private Integer isPay;
+	public Integer getIsPay() {
+		return isPay;
 	}
-	public OrderQuery setIsPaiy(Integer isPaiy) {
-		this.isPaiy = isPaiy;
+	public OrderQuery setIsPay(Integer isPay) {
+		this.isPay = isPay;
 		return this;
 	}
 	private Integer state;
@@ -125,6 +123,17 @@ public class OrderQuery extends BaseQuery {
 		this.note = note;
 		return this;
 	}
+	private Integer isValid;
+
+	public Integer getIsValid() {
+		return isValid;
+	}
+
+	public OrderQuery setIsValid(Integer isValid) {
+		this.isValid = isValid;
+		return this;
+	}
+
 	private boolean noteLike;
 	public OrderQuery setNoteLike(boolean isLike) {
 		this.noteLike = isLike;
@@ -268,13 +277,13 @@ public class OrderQuery extends BaseQuery {
 		return this;
 	}
 	/**
-	 * 设置排序按属性：is_paiy
+	 * 设置排序按属性：is_Pay
 	 * 
 	 * @param isAsc
 	 *            是否升序，否则为降序
 	 */
-	public OrderQuery orderbyIsPaiy(boolean isAsc) {
-		orderFields.add(new OrderField("is_paiy", isAsc ? "ASC" : "DESC"));
+	public OrderQuery orderbyIsPay(boolean isAsc) {
+		orderFields.add(new OrderField("is_Pay", isAsc ? "ASC" : "DESC"));
 		return this;
 	}
 	/**

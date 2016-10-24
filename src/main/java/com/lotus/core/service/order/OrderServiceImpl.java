@@ -38,9 +38,9 @@ public class OrderServiceImpl implements OrderService {
 		order.setTotalPrice(buyCart.getProductPrice());
 		//支付状态
 		if(order.getPaymentWay() == 0){
-			order.setIsPaiy(0);
+			order.setIsPay(0);
 		}else{
-			order.setIsPaiy(1);
+			order.setIsPay(1);
 		}
 		//订单状态   提交订单
 		order.setState(0);

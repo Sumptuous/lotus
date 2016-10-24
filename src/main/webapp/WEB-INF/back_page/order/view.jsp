@@ -47,7 +47,7 @@
 					</tr>
 					<tr>
 						<td width="12%" class="pn-flabel pn-flabel-h">支付状态:</td>
-						<td width="38%" colspan="1" class="pn-fcontent">${order.isPaiyName}</td>
+						<td width="38%" colspan="1" class="pn-fcontent">${order.isPayName}</td>
 						<td width="12%" class="pn-flabel pn-flabel-h">订单状态:</td>
 						<td width="38%" colspan="1" class="pn-fcontent">${order.stateName}</td>
 					</tr>

@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import java.util.List;
 
 /**
- * Created by wangyangyang on 16/9/14.
+ * @author wyy
  */
 public interface BrandService {
 

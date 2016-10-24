@@ -9,8 +9,7 @@ import java.util.List;
 
 /**
  * 购买者条件对象
- * @author lixu
- * @Date [2014-3-28 下午05:58:00]
+ * @author wyy
  */
 public class BuyerQuery extends BaseQuery {
 	/**

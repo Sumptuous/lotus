@@ -12,11 +12,12 @@
 		<result property="paymentCash" column="payment_cash" />
 		<result property="delivery" column="delivery" />
 		<result property="isConfirm" column="isConfirm" />
-		<result property="isPaiy" column="is_paiy" />
+		<result property="isPay" column="is_Pay" />
 		<result property="state" column="state" />
 		<result property="createDate" column="create_date" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
 		<result property="note" column="note" />
 		<result property="buyerId" column="buyer_id" />
+		<result property="isValid" column="is_valid" />
 	</resultMap>
 	<!-- Select SQL -->
 	<sql id="orderSelector">
@@ -25,69 +26,72 @@
 				${fields}
 			</if>
 			<if test="fields == null">
-			id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_paiy,state,create_date,note,buyer_id
+			id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_Pay,state,create_date,note,buyer_id,is_valid
 			</if>
 		FROM lotus_order
 	</sql>
 	<sql id="orderListWhere">
 		<where>
-				<if test="id != null">
-					and id=#{id}
-				</if>
-				<if test="oid != null">
+			<if test="id != null">
+				and id=#{id}
+			</if>
+			<if test="oid != null">
 				<if test="oidLike == false">
 					and oid=#{oid}
 				</if>
 				<if test="oidLike == true">
 					and  oid like "%"#{oid}"%"
 				</if>
-				</if>
-				<if test="deliverFee != null">
-					and deliver_fee=#{deliverFee}
-				</if>
-				<if test="payableFee != null">
-					and payable_fee=#{payableFee}
-				</if>
-				<if test="totalPrice != null">
-					and total_price=#{totalPrice}
-				</if>
-				<if test="paymentWay != null">
-					and payment_way=#{paymentWay}
-				</if>
-				<if test="paymentCash != null">
-					and payment_cash=#{paymentCash}
-				</if>
-				<if test="delivery != null">
-					and delivery=#{delivery}
-				</if>
-				<if test="isConfirm != null">
-					and isConfirm=#{isConfirm}
-				</if>
-				<if test="isPaiy != null">
-					and is_paiy=#{isPaiy}
-				</if>
-				<if test="state != null">
-					and state=#{state}
-				</if>
-				<if test="createDate != null">
-					and create_date=#{createDate}
-				</if>
-				<if test="note != null">
+			</if>
+			<if test="deliverFee != null">
+				and deliver_fee=#{deliverFee}
+			</if>
+			<if test="payableFee != null">
+				and payable_fee=#{payableFee}
+			</if>
+			<if test="totalPrice != null">
+				and total_price=#{totalPrice}
+			</if>
+			<if test="paymentWay != null">
+				and payment_way=#{paymentWay}
+			</if>
+			<if test="paymentCash != null">
+				and payment_cash=#{paymentCash}
+			</if>
+			<if test="delivery != null">
+				and delivery=#{delivery}
+			</if>
+			<if test="isConfirm != null">
+				and isConfirm=#{isConfirm}
+			</if>
+			<if test="isPay != null">
+				and is_Pay=#{isPay}
+			</if>
+			<if test="state != null">
+				and state=#{state}
+			</if>
+			<if test="createDate != null">
+				and create_date=#{createDate}
+			</if>
+			<if test="note != null">
 				<if test="noteLike == false">
 					and note=#{note}
 				</if>
 				<if test="noteLike == true">
 					and  note like "%"#{note}"%"
 				</if>
-				</if>
-				<if test="buyerId != null">
+			</if>
+			<if test="buyerId != null">
 				<if test="buyerIdLike == false">
 					and buyer_id=#{buyerId}
 				</if>
 				<if test="buyerIdLike == true">
 					and  buyer_id like "%"#{buyerId}"%"
 				</if>
-				</if>
+			</if>
+			<if test="isValid != null">
+				and is_valid = #{isValid}
+			</if>
 		</where>
 	</sql>
 
@@ -108,12 +112,12 @@
 
 	<!-- 根据主键查询 -->
 	<select id="getOrderByKey" resultMap="order" parameterType="hashMap">
-		SELECT id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_paiy,state,create_date,note,buyer_id FROM lotus_order
+		SELECT id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_Pay,state,create_date,note,buyer_id,is_valid FROM lotus_order
 		WHERE
 		id=#{id}
 	</select>
 	<select id="getOrdersByKeys" resultMap="order" parameterType="ArrayList">
-		SELECT id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_paiy,state,create_date,note,buyer_id FROM lotus_order
+		SELECT id,oid,deliver_fee,payable_fee,total_price,payment_way,payment_cash,delivery,isConfirm,is_Pay,state,create_date,note,buyer_id,is_valid FROM lotus_order
 		WHERE
 		id in
 		<foreach collection="list" separator="," item="id" open="(" close=")">
@@ -170,8 +174,8 @@
 				<if test="isConfirm != null">
 					isConfirm = #{isConfirm},
 				</if>
-				<if test="isPaiy != null">
-					is_paiy = #{isPaiy},
+				<if test="isPay != null">
+					is_Pay = #{isPay},
 				</if>
 				<if test="state != null">
 					state = #{state},
@@ -183,7 +187,10 @@
 					note = #{note},
 				</if>
 				<if test="buyerId != null">
-					buyer_id = #{buyerId}
+					buyer_id = #{buyerId},
+				</if>
+				<if test="isValid != null">
+					is_valid = #{isValid}
 				</if>
 			</trim>
 		</set>
@@ -242,8 +249,8 @@
 				<if test="isConfirm != null">
 					isConfirm,
 				</if>
-				<if test="isPaiy != null">
-					is_paiy,
+				<if test="isPay != null">
+					is_Pay,
 				</if>
 				<if test="state != null">
 					state,
@@ -287,8 +294,8 @@
 					<if test="isConfirm != null">
 						#{isConfirm},
 					</if>
-					<if test="isPaiy != null">
-						#{isPaiy},
+					<if test="isPay != null">
+						#{isPay},
 					</if>
 					<if test="state != null">
 						#{state},

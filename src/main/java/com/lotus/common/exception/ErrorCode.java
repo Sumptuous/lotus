@@ -8,7 +8,7 @@ public enum ErrorCode {
     PLEASE_INPUT_USERNAME(1000, "请输入用户名!"),
     PLEASE_INPUT_PASSWORD(1001, "请输入密码!"),
     PLEASE_INPUT_VERIFICATION_CODE(1002, "请输入验证码!"),
-    INCORRECT_PASSWORD(1003, "密码不正确!"),
+    INCORRECT_PASSWORD(1003, "{test}密码不正确!"),
     INCORRECT_USERNAME(1004, "用户名不正确!"),
     INCORRECT_VERIFICATION_CODE(1005, "验证码不正确!"),
     PASSWORD_NOT_MATCH(1006, "两次输入的密码不匹配!"),

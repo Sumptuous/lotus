@@ -22,11 +22,12 @@ public class Order implements Serializable {
 	private Integer paymentCash;
 	private Integer delivery;
 	private Integer isConfirm;
-	private Integer isPaiy;
+	private Integer isPay;
 	private Integer state;
 	private Date createDate;
 	private String note;
 	private String buyerId;
+	private Integer isValid;
 	
 	/** 特殊处理字段   */
 	/** 支付方式           */
@@ -50,8 +51,8 @@ public class Order implements Serializable {
 		}
 	}
 	/** 支付状态        //支付状态 :0到付,1待付款,2已付款,3待退款,4退款成功,5退款失败  */
-	public String getIsPaiyName() {
-		switch (isPaiy) {
+	public String getIsPayName() {
+		switch (isPay) {
 			case 0:  return "货到到付";
 			case 1:  return "待付款";
 			case 2:  return "已付款";
@@ -131,8 +132,8 @@ public class Order implements Serializable {
 	public Integer getPaymentCash() {
 		return paymentCash;
 	}
-	public Integer getIsPaiy() {
-		return isPaiy;
+	public Integer getIsPay() {
+		return isPay;
 	}
 	public Integer getState() {
 		return state;
@@ -152,8 +153,8 @@ public class Order implements Serializable {
 	public void setIsConfirm(Integer isConfirm) {
 		this.isConfirm = isConfirm;
 	}
-	public void setIsPaiy(Integer isPaiy) {
-		this.isPaiy = isPaiy;
+	public void setIsPay(Integer isPay) {
+		this.isPay = isPay;
 	}
 
 	public void setState(Integer state) {
@@ -177,15 +178,33 @@ public class Order implements Serializable {
 	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
 	}
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", oid=" + oid + ", deliverFee="
-				+ deliverFee + ", payableFee=" + payableFee + ", totalPrice="
-				+ totalPrice + ", paymentWay=" + paymentWay + ", paymentCash="
-				+ paymentCash + ", delivery=" + delivery + ", isConfirm="
-				+ isConfirm + ", isPaiy=" + isPaiy + ", state=" + state
-				+ ", createDate=" + createDate + ", note=" + note
-				+ ", buyerId=" + buyerId + "]";
+
+	public Integer getIsValid() {
+		return isValid;
 	}
 
+	public void setIsValid(Integer isValid) {
+		this.isValid = isValid;
+	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+				"id=" + id +
+				", oid='" + oid + '\'' +
+				", deliverFee=" + deliverFee +
+				", payableFee=" + payableFee +
+				", totalPrice=" + totalPrice +
+				", paymentWay=" + paymentWay +
+				", paymentCash=" + paymentCash +
+				", delivery=" + delivery +
+				", isConfirm=" + isConfirm +
+				", isPay=" + isPay +
+				", state=" + state +
+				", createDate=" + createDate +
+				", note='" + note + '\'' +
+				", buyerId='" + buyerId + '\'' +
+				", isValid=" + isValid +
+				'}';
+	}
 }

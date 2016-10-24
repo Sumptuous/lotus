@@ -43,7 +43,7 @@
 				<td align="center">${order.payableFee}</td>
 				<td align="center">${order.paymentWayName}</td>
 				<td align="center">${order.paymentCashName}</td>
-				<td align="center">${order.isPaiyName}</td>
+				<td align="center">${order.isPayName}</td>
 				<td align="center">${order.stateName}</td>
 				<td align="center">${order.createDate}</td>
 				<td align="center"></td>

@@ -8,8 +8,7 @@ import java.util.List;
 
 /**
  * 
- * @author lixu
- * @Date [2014-3-28 下午05:58:00]
+ * @author wyy
  */
 public class SkuQuery extends BaseQuery {
 	/**

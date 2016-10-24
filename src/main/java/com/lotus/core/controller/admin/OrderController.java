@@ -33,18 +33,18 @@ public class OrderController {
 
 	/**
 	 * 订单列表
-	 * @param isPaiy
+	 * @param isPay
 	 * @param state
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/order/list.do")
-	public String list(Integer isPaiy,Integer state,ModelMap model){
+	public String list(Integer isPay,Integer state,ModelMap model){
 		
 		OrderQuery orderQuery = new OrderQuery();
 		//支付状态
-		if(null != isPaiy){
-			orderQuery.setIsPaiy(isPaiy);
+		if(null != isPay){
+			orderQuery.setIsPay(isPay);
 		}
 		//订单状态
 		if(null != state){

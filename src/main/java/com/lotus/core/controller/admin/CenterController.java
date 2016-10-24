@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Date;
 
 /**
- * Created by wangyangyang on 16/9/6.
+ * @author wyy
  */
 @Controller
 @RequestMapping("center")

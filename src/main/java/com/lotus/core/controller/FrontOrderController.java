@@ -39,12 +39,11 @@ public class FrontOrderController {
 	public String confirmOrder(Order order, HttpServletRequest request, HttpServletResponse response){
 		//1:接收前台传四个参数
 		
-		//springmvc 
 		ObjectMapper om = new ObjectMapper();
 		om.setSerializationInclusion(Inclusion.NON_NULL);
 		
 		//声明
-		BuyCart buyCart = null;
+		BuyCart buyCart = new BuyCart();
 		//判断Cookie是否有购物车  
 		
 		//JESSIONID
