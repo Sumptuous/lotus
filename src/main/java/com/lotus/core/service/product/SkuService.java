@@ -16,38 +16,38 @@ public interface SkuService {
      *
      * @return
      */
-    public Integer addSku(Sku sku);
+    Integer addSku(Sku sku);
 
     /**
      * 根据主键查询
      */
-    public Sku getSkuByKey(Integer id);
+    Sku getSkuByKey(Integer id);
 
     /**
      * 根据主键批量查询
      */
-    public List<Sku> getSkusByKeys(List<Integer> idList);
+    List<Sku> getSkusByKeys(List<Integer> idList);
 
     /**
      * 根据主键删除
      *
      * @return
      */
-    public Integer deleteByKey(Integer id);
+    Integer deleteByKey(Integer id);
 
     /**
      * 根据主键批量删除
      *
      * @return
      */
-    public Integer deleteByKeys(List<Integer> idList);
+    Integer deleteByKeys(List<Integer> idList);
 
     /**
      * 根据主键更新
      *
      * @return
      */
-    public Integer updateSkuByKey(Sku sku);
+    Integer updateSkuByKey(Sku sku);
 
     /**
      * 根据条件查询分页查询
@@ -56,7 +56,7 @@ public interface SkuService {
      *            查询条件
      * @return
      */
-    public Pagination getSkuListWithPage(SkuQuery skuQuery);
+    Pagination getSkuListWithPage(SkuQuery skuQuery);
 
     /**
      * 根据条件查询
@@ -65,10 +65,10 @@ public interface SkuService {
      *            查询条件
      * @return
      */
-    public List<Sku> getSkuList(SkuQuery skuQuery);
+    List<Sku> getSkuList(SkuQuery skuQuery);
 
     /**
      * 库存大于>0
      */
-    public List<Sku> getStock(Integer productId);
+    List<Sku> getStock(Integer productId);
 }

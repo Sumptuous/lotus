@@ -10,57 +10,57 @@ public interface SkuMapper {
      * 添加
      * @param sku
      */
-    public Integer addSku(Sku sku);
+    Integer addSku(Sku sku);
 
     /**
      * 根据主键查找
      * @param id
      */
-    public Sku getSkuByKey(Integer id);
+    Sku getSkuByKey(Integer id);
 
     /**
      * 根据主键批量查找
      * @param idList
      */
-    public List<Sku> getSkusByKeys(List<Integer> idList);
+    List<Sku> getSkusByKeys(List<Integer> idList);
 
     /**
      * 根据主键删除
      * @param id
      */
-    public Integer deleteByKey(Integer id);
+    Integer deleteByKey(Integer id);
 
     /**
      * 根据主键批量删除
      * @param idList
      */
-    public Integer deleteByKeys(List<Integer> idList);
+    Integer deleteByKeys(List<Integer> idList);
 
     /**
      * 根据主键更新
      * @param sku
      */
-    public Integer updateSkuByKey(Sku sku);
+    Integer updateSkuByKey(Sku sku);
 
     /**
      * 分页查询
      * @param skuQuery
      */
-    public List<Sku> getSkuListWithPage(SkuQuery skuQuery);
+    List<Sku> getSkuListWithPage(SkuQuery skuQuery);
 
     /**
      * 集合查询
      * @param skuQuery
      */
-    public List<Sku> getSkuList(SkuQuery skuQuery);
+    List<Sku> getSkuList(SkuQuery skuQuery);
 
     /**
      * 总条数
      * @param skuQuery
      */
-    public int getSkuListCount(SkuQuery skuQuery);
+    int getSkuListCount(SkuQuery skuQuery);
     /**
      * 库存大于>0
      */
-    public List<Sku> getStock(Integer productId);
+    List<Sku> getStock(Integer productId);
 }
