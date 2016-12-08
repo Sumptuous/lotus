@@ -25,11 +25,13 @@ public class OrderServiceImpl implements OrderService {
 	@Resource
 	DetailService detailService;
 
-	public Integer addOrder(Order order, BuyCart buyCart) {
+	public Integer addOrder(BuyCart buyCart) {
+		Order order = new Order();
 		//生成订单号
 		DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String oid = df.format(new Date());
 		order.setOid(oid);
+		order.setBuyerId(buyCart.getBuyerId());
 		//运费
 		order.setDeliverFee(buyCart.getFee());
 		//应付金额

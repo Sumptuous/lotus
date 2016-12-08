@@ -17,6 +17,8 @@ public class BuyCart {
 
 	/**继续购物   最后一款*/
 	private Integer productId;
+
+	private String buyerId;
 	
 	
 	//添加方法
@@ -98,12 +100,12 @@ public class BuyCart {
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
-	
-	
-	//小计
-	
-	
-	
-	
-	
+
+	public String getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId;
+	}
 }

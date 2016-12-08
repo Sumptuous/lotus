@@ -8,12 +8,15 @@ import com.lotus.core.bean.user.Buyer;
 import com.lotus.core.service.order.OrderService;
 import com.lotus.core.service.product.SkuService;
 import com.lotus.core.web.Constants;
+import com.lotus.core.web.ProducerService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.jms.Destination;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +36,11 @@ public class FrontOrderController {
 	private SessionProvider sessionProvider;
 	@Autowired
 	private SkuService skuService;
+	@Autowired
+	private ProducerService producerService;
+	@Autowired
+	@Qualifier("queueDestination")
+	private Destination destination;
 	
 	//提交订单
 	@RequestMapping(value = "/buyer/confirmOrder.shtml")
@@ -77,9 +85,12 @@ public class FrontOrderController {
 		
 		Buyer buyer = (Buyer) sessionProvider.getAttribute(request, response, Constants.BUYER_SESSION);
 		//用户Id
-		order.setBuyerId(buyer.getUsername());
-		//保存订单   订单详情  二张表
-		orderService.addOrder(order,buyCart);
+//		order.setBuyerId(buyer.getUsername());
+		buyCart.setBuyerId(buyer.getUsername());
+		//保存订单   订单详情
+//		orderService.addOrder(buyCart);
+		//放入消息队列
+		producerService.sendMessage(destination, buyCart, "buyCart");
 		//清空购物车
 		Cookie cookie = new Cookie(Constants.BUYCART_COOKIE,null);
 		cookie.setPath("/");

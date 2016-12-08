@@ -17,7 +17,7 @@ public interface OrderService {
 	 * 
 	 * @return
 	 */
-	Integer addOrder(Order order, BuyCart buyCart);
+	Integer addOrder(BuyCart buyCart);
 
 	/**
 	 * 根据主键查询
