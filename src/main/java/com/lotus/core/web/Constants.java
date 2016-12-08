@@ -20,4 +20,6 @@ public interface Constants {
      * 购物车Cookie
      */
     public static final String BUYCART_COOKIE = "buyCart_cookie";
+
+    public static final Integer ERR_CODE_PREFIX = 110;
 }

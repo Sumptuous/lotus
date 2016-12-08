@@ -5,6 +5,11 @@ package com.lotus.common.exception;
  */
 public enum ErrorCode {
 
+    COMMON_MISSING_HTTP_REQ_PARAM(100),
+    COMMON_SQL_SYNTAX_ERROR(101),
+    COMMON_TRANSCATION_ROLLBACK(102),
+    COMMON_UNDEFINED_ERROR(103, "系统未定义异常"),
+
     PLEASE_INPUT_USERNAME(1000, "请输入用户名!"),
     PLEASE_INPUT_PASSWORD(1001, "请输入密码!"),
     PLEASE_INPUT_VERIFICATION_CODE(1002, "请输入验证码!"),

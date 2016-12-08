@@ -18,6 +18,8 @@
 				<value>classpath:properties/jdbc.properties</value>
 				<!-- email -->
 				<value>classpath:properties/config.properties</value>
+				<!--redis-->
+				<value>classpath:properties/redis.properties</value>
 			</list>
 		</property>
 	</bean>

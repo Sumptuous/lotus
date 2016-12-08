@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+	<!-- jedis连接池配置 -->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${redis.minIdle}"/>
+		<!-- 最大空闲连接数 -->
+		<property name="maxIdle" value="${redis.maxIdle}"/>
+		<!-- 最大连接数 -->
+		<property name="maxTotal" value="${redis.maxTotal}"/>
+		<!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+		<!-- 在获取连接的时候检查有效性, 默认false -->
+		<property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+		<!-- 每次释放连接的最大数目 -->
+		<property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+		<!-- 释放连接的扫描间隔（毫秒） -->
+		<property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"/>
+		<!-- 连接最小空闲时间 -->
+		<property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+		<!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+		<property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}"/>
+		<!-- 在空闲时检查有效性, 默认false -->
+		<property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+		<!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+		<property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>
+	</bean>
+
+	<!-- 切面对象 -->
+	<bean id="redisCache" class="com.lotus.common.web.aop.RedisCache">
+		<!--<property name="expiry" value="4200000"/>-->
+	</bean>
+
+	<!--Spring  Aop 配置   get* 配置环绕-->
+	<!--<aop:config>-->
+		<!--&lt;!&ndash; 面 &ndash;&gt;-->
+		<!--<aop:aspect ref="redisCache">-->
+			<!--&lt;!&ndash; 点 &ndash;&gt;-->
+			<!--<aop:around method="doAround" pointcut="execution(* com.lotus.core.service.*.*.get*(..))"/>-->
+			<!--&lt;!&ndash; 变更  &ndash;&gt;-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.update*(..))"/>-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.add*(..))"/>-->
+			<!--<aop:after method="doAfter" pointcut="execution(* com.lotus.core.service.*.*.delete*(..))"/>-->
+		<!--</aop:aspect>-->
+	<!--</aop:config>-->
+</beans>
