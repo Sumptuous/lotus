@@ -8,6 +8,7 @@ import com.lotus.core.bean.user.Buyer;
 import com.lotus.core.service.order.OrderService;
 import com.lotus.core.service.product.SkuService;
 import com.lotus.core.web.Constants;
+import com.lotus.core.web.MessageType;
 import com.lotus.core.web.ProducerService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -20,6 +21,8 @@ import javax.jms.Destination;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +44,9 @@ public class FrontOrderController {
 	@Autowired
 	@Qualifier("queueDestination")
 	private Destination destination;
-	
+
+	private ObjectMapper mapper = new ObjectMapper();
+
 	//提交订单
 	@RequestMapping(value = "/buyer/confirmOrder.shtml")
 	public String confirmOrder(Order order, HttpServletRequest request, HttpServletResponse response){
@@ -90,7 +95,7 @@ public class FrontOrderController {
 		//保存订单   订单详情
 //		orderService.addOrder(buyCart);
 		//放入消息队列
-		producerService.sendMessage(destination, buyCart, "buyCart");
+		producerService.sendMessage(destination, buyCart, "buyCart", MessageType.Object);
 		//清空购物车
 		Cookie cookie = new Cookie(Constants.BUYCART_COOKIE,null);
 		cookie.setPath("/");
@@ -99,5 +104,4 @@ public class FrontOrderController {
 		
 		return "product/confirmOrder";
 	}
-	
 }

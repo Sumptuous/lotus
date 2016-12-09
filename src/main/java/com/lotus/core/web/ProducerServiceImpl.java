@@ -19,12 +19,22 @@ public class ProducerServiceImpl implements ProducerService {
     @Resource
     private JmsTemplate jmsTemplate;
 
-    public void sendMessage(Destination destination, final Object obj, final String id) {
+    public void sendMessage(Destination destination, final Object obj, final String id, final MessageType type) {
         jmsTemplate.send(destination, new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {
-                ObjectMessage objectMessage = session.createObjectMessage((Serializable) obj);
-                objectMessage.setJMSCorrelationID(id);
-                return objectMessage;
+                if (MessageType.Text.equals(type)){
+                    TextMessage textMessage = session.createTextMessage((String) obj);
+                    textMessage.setJMSCorrelationID(id);
+                    return textMessage;
+                } else if (MessageType.Map.equals(type)){
+                    MapMessage mapMessage = session.createMapMessage();
+                    mapMessage.setJMSCorrelationID(id);
+                    return mapMessage;
+                } else {
+                    ObjectMessage objectMessage = session.createObjectMessage((Serializable) obj);
+                    objectMessage.setJMSCorrelationID(id);
+                    return objectMessage;
+                }
             }
         });
     }

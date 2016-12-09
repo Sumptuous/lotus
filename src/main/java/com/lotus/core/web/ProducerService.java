@@ -9,9 +9,9 @@ import javax.jms.ObjectMessage;
 public interface ProducerService {
 
     /**
-     * 发送消息
+     * 发送对象消息
      * @param destination
      * @param obj
      */
-    void sendMessage(Destination destination, final Object obj, final String id);
+    void sendMessage(Destination destination, final Object obj, final String id, final MessageType type);
 }

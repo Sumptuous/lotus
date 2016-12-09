@@ -133,7 +133,7 @@ public class RedisCache {
     /**
      * 定时同步redis中的数据
      */
-    @PostConstruct
+    //@PostConstruct
     private void delete(){
         ScheduledExecutorService service = Executors
                 .newSingleThreadScheduledExecutor();

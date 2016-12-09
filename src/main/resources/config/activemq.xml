@@ -12,13 +12,26 @@
 
 	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://localhost:61616"/>
+		<!--配置可信任的包-->
+		<property name="trustedPackages">
+			<list>
+				<value>com.lotus.core.bean</value>
+				<value>java.util</value>
+				<value>java.lang</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+		<property name="connectionFactory" ref="targetConnectionFactory"/>
+	</bean>
+	<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="configuration" ref="jmsConfig"/>
 	</bean>
 
 	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
 		<property name="connectionFactory" ref="targetConnectionFactory"/>
 		<property name="maxConnections" value="10"/>
 	</bean>
-
 	<bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
 		<property name="targetConnectionFactory" ref="pooledConnectionFactory"/>
 	</bean>

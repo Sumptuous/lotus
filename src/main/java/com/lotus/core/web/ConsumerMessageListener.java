@@ -3,6 +3,7 @@ package com.lotus.core.web;
 import com.lotus.core.bean.BuyCart;
 import com.lotus.core.bean.order.Order;
 import com.lotus.core.service.order.OrderService;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,20 +20,25 @@ public class ConsumerMessageListener implements MessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConsumerMessageListener.class);
 
+    private ObjectMapper mapper = new ObjectMapper();
+
     @Override
     public void onMessage(Message message) {
-        TextMessage textMsg = (TextMessage) message;
-        if (message instanceof ObjectMessage){
-            try {
+        try {
+            if (message.getJMSCorrelationID().equals("buyCart")){
                 ObjectMessage objectMessage = (ObjectMessage) message;
-                if (message.getJMSCorrelationID().equals("buyCart")){
-                    BuyCart buyCart = (BuyCart) objectMessage.getObject();
-                    orderService.addOrder(buyCart);
-                }
-                LOG.info("============ Consumer receive message successfully. ==========");
-            } catch (JMSException e) {
-                LOG.error("Failed to receive message. " + e.getMessage());
+                BuyCart buyCart = (BuyCart) objectMessage.getObject();
+                orderService.addOrder(buyCart);
             }
+
+            if (message.getJMSCorrelationID().equals("buyCartText")){
+                TextMessage textMessage = (TextMessage) message;
+                BuyCart buyCart = mapper.readValue(textMessage.getText(), BuyCart.class);
+                orderService.addOrder(buyCart);
+            }
+            LOG.info("============ Consumer receive message successfully. ==========");
+        } catch (Exception e) {
+            LOG.error("Failed to receive message. " + e);
         }
     }
 }

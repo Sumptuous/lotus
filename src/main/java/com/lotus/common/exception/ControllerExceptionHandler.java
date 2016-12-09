@@ -89,8 +89,10 @@ public class ControllerExceptionHandler implements HandlerExceptionResolver {
 			map.put("success", false);
 			if (ex instanceof BaseException) {
 				map.put("errorMsg", ex.getMessage());
+				LOG.error("BaseException", ex);
 			} else {
 				map.put("errorMsg", "系统异常！");
+				LOG.error("系统异常", ex);
 			}
 			return new ModelAndView("/error", map);
 		}else {

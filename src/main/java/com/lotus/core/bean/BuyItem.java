@@ -2,12 +2,14 @@ package com.lotus.core.bean;
 
 import com.lotus.core.bean.product.Sku;
 
+import java.io.Serializable;
+
 /**
  * 购物项
  * @author wyy
  *
  */
-public class BuyItem {
+public class BuyItem implements Serializable {
 
 	private Sku sku;
 	/**数量*/

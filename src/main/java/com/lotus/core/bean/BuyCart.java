@@ -2,6 +2,7 @@ package com.lotus.core.bean;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @author wyy
  *
  */
-public class BuyCart {
+public class BuyCart implements Serializable{
 
 	/**购物项  集合*/
 	List<BuyItem> items = new ArrayList<BuyItem>();
